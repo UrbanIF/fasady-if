@@ -4,7 +4,7 @@ class Photo
   field :link, type: String
   #field :approved, type: Mongoid::Boolean, default: false
 
-  belongs_to :user
+  #belongs_to :user
 
   embedded_in :map_object, inverse_of: :before_photos
   embedded_in :map_object, inverse_of: :after_photos
