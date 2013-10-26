@@ -8,30 +8,60 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
+ *= require normalize
  *= require_self
- *= require_tree .
 */
-.brand {
-  float: left;
-  padding-right: 8px;
+
+@import "compass";
+
+html, body{
+    height: 100%;
 }
-ul.nav {
-  list-style: none;
-  margin: 0 0 2em;
-  padding: 0;
+
+body{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
 }
-ul.nav li {
-  display: inline;
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
-#flash_notice, #flash_alert {
-  padding: 5px 8px;
-  margin: 10px 0;
+
+
+
+.left_panel{
+    width: 450px;
+    height: 100%;
+    background: red;
 }
-#flash_notice {
-  background-color: #CFC;
-  border: solid 1px #6C6;
-}
-#flash_alert {
-  background-color: #FCC;
-  border: solid 1px #C66;
-}
+    .site_header{
+        height: 154px;
+        padding: 25px 20px 8px 40px;
+        background: #fff;
+        position: relative;
+    }
+        .site_title{
+            font-size: 36px;
+            margin: 0;
+            font-weight: 300;
+        }
+        .question_sign{
+            display: block;
+            width: 26px;
+            height: 26px;
+            float: right;
+            font-size: 18.6px;
+            color: #fff;
+            background: #74777b;
+            @include border-radius(50%);
+            padding-left: 9px;
+            margin-top: 12px;
+        }
+        .sorting_label{
+            font-weight: 700;
+            position: absolute;
+            bottom: 9px;
+            right: 20px;
+        }

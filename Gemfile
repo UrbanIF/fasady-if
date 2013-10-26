@@ -24,6 +24,13 @@ gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem "rmagick", "~> 2.13.1" #brew install imagemagick --disable-openmp --build-from-source
 
 
+gem 'sass-rails', '~> 4.0.0'
+gem "compass-rails", "~> 2.0.alpha.0"
+#gem 'compass-susy-plugin'
+#gem 'susy', git: "git://github.com/ericam/susy.git"
+gem 'uglifier', '>= 1.3.0'
+gem 'coffee-rails', '~> 4.0.0'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
