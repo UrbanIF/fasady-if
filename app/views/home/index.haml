@@ -1,4 +1,5 @@
 .left_panel
+
   %header.site_header
     .container
       %span.question_sign ?
@@ -10,4 +11,50 @@
       %label.sorting_label а-я
 
 
-.map_container
+  .left_panel-content_container
+    .left_panel-content
+      %ul.objects_list
+
+        - 10.times do
+          %li.objects_block
+            -#.letter_block
+            .letter> A
+            %ul.letter_objects
+              %li.object_name Антоновича, 34
+              %li.object_name Антоновича, 35
+              %li.object_name Антоновича, 31
+              %li.object_name Антоновича, 32
+
+
+
+
+
+  %footer.site_footer
+    .marker-desc
+      .marker.green
+      .desc
+        Заклади
+        культури та освіти
+    .marker-desc
+      .marker.orange
+      .desc
+        Заклади
+        культури та освіти
+    .marker-desc
+      .marker.yellow
+      .desc
+        Заклади
+        культури та освіти
+    .marker-desc
+      .marker.blue
+      .desc
+        Заклади
+        культури та освіти
+    .marker-desc
+      .marker.purple
+      .desc
+        Заклади
+        культури та освіти
+
+.right_container
+  #map
