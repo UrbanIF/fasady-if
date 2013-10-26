@@ -8,24 +8,12 @@
 
 
 
-      %label.sorting_label а-я
+      -#%label.sorting_label а-я
 
 
   .left_panel-content_container
     .left_panel-content
-      %ul.objects_list
-
-        - 10.times do
-          %li.objects_block
-            -#.letter_block
-            .letter> A
-            %ul.letter_objects
-              %li.object_name Антоновича, 34
-              %li.object_name Антоновича, 35
-              %li.object_name Антоновича, 31
-              %li.object_name Антоновича, 32
-
-
+      %ul#letters_list.objects_list
 
 
 
@@ -60,4 +48,4 @@
   #map
 
   .search_container
-    %input#search.search{type: 'text', placeholder: 'Введіть назву вулиці та будинок'}
+    %input#search.search{type: 'text', placeholder: 'Введіть назву вулиці та номер будиноку'}

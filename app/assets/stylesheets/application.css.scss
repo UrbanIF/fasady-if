@@ -41,6 +41,7 @@ body{
     background: #fff;
     position: absolute;
     left: 0; top: 0;
+    z-index: 999;
 }
     .site_header{
         height: 154px;
@@ -122,6 +123,10 @@ body{
                     }
                         .object_name{
                             line-height: 30px;
+                            cursor: pointer;
+                            &:hover{
+                                color: #4d90fe;
+                            }
                         }
 
 

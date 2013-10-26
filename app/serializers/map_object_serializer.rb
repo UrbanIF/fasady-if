@@ -1,5 +1,5 @@
 class MapObjectSerializer < ActiveModel::Serializer
-  attributes :id, :name, :location, :value, :tokens, :category
+  attributes :id, :name, :location, :value, :tokens, :category, :letter
   has_one  :address
 
   has_many  :before_photos, :after_photos
@@ -15,13 +15,20 @@ class MapObjectSerializer < ActiveModel::Serializer
   #for twitter typehead
   def value
     if object.address.modifier
-      "#{object.address.street}, #{object.address.building_number} #{object.address.modifier} (#{object.name})"
+      "#{object.address.prefix} #{object.address.street}, #{object.address.building_number} #{object.address.modifier} (#{object.name})"
     else
-      "#{object.address.street}, #{object.address.building_number} (#{object.name})"
+      "#{object.address.prefix} #{object.address.street}, #{object.address.building_number} (#{object.name})"
     end
   end
 
+  def letter
+    object.address.street[0]
+  end
+
   def tokens
-    [object.address.street, object.address.building_number, object.name]
+    object.address.street.split(/[\s,.-]+/)
+    .push(object.address.building_number.to_s)
+    .push(object.address.prefix)
+    .push(object.name)
   end
 end

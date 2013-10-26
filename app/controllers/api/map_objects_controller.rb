@@ -1,8 +1,10 @@
 class Api::MapObjectsController < ApplicationController
 
   def index
-    map_objects = MapObject.includes(:category).all
-    categories = Category.all
+    map_objects = MapObject.includes(:category).order_by(:'address.street'.asc).all
+
+
+    #categories = Category.all
     render json: map_objects, status: 200
     #, meta: {categories: categories.to_json}
   end
