@@ -49,7 +49,7 @@ class User
 
 
   has_many :map_objects
-  has_many :photos
+  #has_many :photos
 
 
 

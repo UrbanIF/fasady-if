@@ -172,8 +172,59 @@ body{
     width: 100%;
     height: 100%;
     padding-left: 450px;
+    position: relative;
 }
-  #map{
-      width: 100%;
-      height: 100%;
-  }
+    #map{
+        width: 100%;
+        height: 100%;
+    }
+
+    .search_container{
+        position: absolute;
+        top: 20px;
+        left: 469px;
+        z-index: 999;
+    }
+    .plate{
+        width: 472px;
+        height: 60px;
+        @include border-radius(3px);
+        color: #585d64;
+        font-weight: 500;
+        font-size: 18px;
+        border: none;
+        background: #fff;
+        padding: 10px 30px;
+    }
+    input{
+        @extend .plate;
+
+        &:focus{
+            outline: none;
+            //@include box-shadow(inset 1px 1px 2px #c9c9c9, 0 0 0 2px #f3e97f);
+        }
+        &.search{
+            padding-right: 80px;
+            background-image: inline-image("search.png");
+            background-repeat: no-repeat;
+            background-position: right center;
+        }
+    }
+
+
+    ::-webkit-input-placeholder { color: #585d64; font-weight: 300; font-size: 18px; }
+    :-moz-placeholder { color: #585d64; font-weight: 300; font-size: 18px; }
+    ::-moz-placeholder { color: #585d64; font-weight: 300; font-size: 18px; }
+    :-ms-input-placeholder { color: #585d64; font-weight: 300; font-size: 18px; }
+    .placeholder { color: #585d64; font-weight: 300; font-size: 18px; }
+
+    .tt-suggestion{
+        @extend .plate;
+        line-height: 42px;
+        margin: 5px 0;
+        p{
+            margin: 0;
+        }
+    }
+
+
