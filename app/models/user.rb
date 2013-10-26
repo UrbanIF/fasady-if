@@ -45,5 +45,13 @@ class User
   # run 'rake db:mongoid:create_indexes' to create indexes
   index({ email: 1 }, { unique: true, background: true })
   field :name, :type => String
-  validates_presence_of :name
+  #validates_presence_of :name
+
+
+  has_many :map_objects
+  has_many :photos
+
+
+
+
 end

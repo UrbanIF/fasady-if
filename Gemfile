@@ -11,6 +11,19 @@ gem 'devise'
 gem 'haml-rails'
 gem 'mongoid', '~> 4', :github=>"mongoid/mongoid"
 gem 'simple_form', '>= 3.0.0.rc'
+
+
+gem 'rails_admin'
+
+gem 'inherited_resources', github: 'josevalim/inherited_resources'
+gem 'has_scope', github: 'plataformatec/has_scope'
+
+gem 'active_model_serializers'
+gem 'carrierwave'
+gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+gem "rmagick", "~> 2.13.1" #brew install imagemagick --disable-openmp --build-from-source
+
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
