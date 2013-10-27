@@ -15,11 +15,11 @@ end
 
 
 puts 'Create category'
-category1 = Category.create(name: "Заклади культури та освіти")
-category2 = Category.create(name: "Державні установи")
-category3 = Category.create(name: "Заклади обслуговування")
-category4 = Category.create(name: "Заклади громадського харчування")
-category5 = Category.create(name: "Інше")
+category1 = Category.create(name: "Заклади культури та освіти", color: 'green')
+category2 = Category.create(name: "Заклади громадського харчування", color: 'red')
+category3 = Category.create(name: "Інше", color: 'yellow')
+category4 = Category.create(name: "Державні установи", color: 'blue')
+category5 = Category.create(name: "Заклади обслуговування", color: 'purple')
 
 puts 'Create map object'
 

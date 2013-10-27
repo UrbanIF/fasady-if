@@ -13,32 +13,8 @@
 
 
 
-  %footer.site_footer
-    .marker-desc
-      .marker.green
-      .desc
-        Заклади
-        культури та освіти
-    .marker-desc
-      .marker.red
-      .desc
-        Заклади
-        культури та освіти
-    .marker-desc
-      .marker.yellow
-      .desc
-        Заклади
-        культури та освіти
-    .marker-desc
-      .marker.blue
-      .desc
-        Заклади
-        культури та освіти
-    .marker-desc
-      .marker.purple
-      .desc
-        Заклади
-        культури та освіти
+  %footer.site_footer#categories
+
 
 .right_container
   #map
@@ -46,7 +22,7 @@
   .search_container
     %input#search.search{type: 'text', placeholder: 'Введіть назву вулиці та номер будиноку'}
 
-  #add_object +
+  #add_object.open-popup{'data-id' => 'add_object_popup'} +
 
 
 #add_object_popup.popup_container
@@ -65,4 +41,4 @@
         .btn.add-image.margin-right> Фото існуючого стану
         .btn.add-image Проект-пропозиція до об’єкта
       %input.popup_input.popup_comment{placeholder: 'Короткий опис'}>
-      .btn.btn-short.save_object Додати
+      .btn.btn-short.save_object#submit_object Додати

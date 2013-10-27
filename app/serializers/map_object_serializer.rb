@@ -1,5 +1,5 @@
 class MapObjectSerializer < ActiveModel::Serializer
-  attributes :id, :name, :location, :value, :tokens, :category, :letter
+  attributes :id, :name, :location, :value, :tokens, :category, :color, :letter
   has_one  :address
 
   has_many  :before_photos, :after_photos
@@ -10,6 +10,10 @@ class MapObjectSerializer < ActiveModel::Serializer
 
   def category
     object.category.name
+  end
+
+  def color
+    object.category.color
   end
 
   #for twitter typehead
@@ -30,5 +34,6 @@ class MapObjectSerializer < ActiveModel::Serializer
     .push(object.address.building_number.to_s)
     .push(object.address.prefix)
     .push(object.name)
+    .push(object.location.to_s)
   end
 end

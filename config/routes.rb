@@ -3,7 +3,7 @@ FasadyIf::Application.routes.draw do
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   namespace 'api' do
-    resources :map_objects, only: [:index] do
+    resources :map_objects, only: [:index, :create] do
       collection do
         get 'categories', to: :categories
       end

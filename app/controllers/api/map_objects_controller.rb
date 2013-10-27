@@ -14,10 +14,33 @@ class Api::MapObjectsController < ApplicationController
     render json: categories, status: 200
   end
 
-  def default_serializer_options
-    {
-        root: false
-    }
+
+  def create
+    mo = MapObject.create map_object_params
+    mo.user = current_user
+    mo.save!
+
+    render json: {}, status: 200
   end
+
+  protected
+    def default_serializer_options
+      { root: false }
+    end
+
+    def map_object_params
+      def user_params
+        params.require(:map_object).permit(:name,  :category_id,
+                                     :location => [],
+                                     address:    [:prefix, :street, :building_number, :modifier],
+
+                                     before_photos: [:link],
+                                     after_photos:  [:link]
+                                     #{ before_photos: :link },
+                                     #{ after_photos: :link }
+        )
+
+      end
+    end
 
 end

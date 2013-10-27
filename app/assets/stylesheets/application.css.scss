@@ -319,11 +319,15 @@ body{
         padding: 7px 18px 16px;
     }
 
-    .search{
-        width: 362px;
+    .popup_search_container{
         position: absolute;
         top: 210px;
+        z-index: 99999;
     }
+        .search{
+            width: 362px;
+        }
+
 
     .popup_add_files{
         margin: 20px 0 10px;

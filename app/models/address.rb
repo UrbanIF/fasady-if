@@ -8,4 +8,6 @@ class Address
 
   embedded_in :map_object
 
+  #todo ADD index
+
 end
