@@ -20,7 +20,11 @@ class Api::MapObjectsController < ApplicationController
     mo.user = current_user
     mo.save!
 
-    render json: {}, status: 200
+    puts 'xxxxxxxxxxxxxxxxxxxxx'
+    puts  map_object_params
+    puts  mo
+
+    render json: mo, status: 200
   end
 
   protected
@@ -29,18 +33,16 @@ class Api::MapObjectsController < ApplicationController
     end
 
     def map_object_params
-      def user_params
-        params.require(:map_object).permit(:name,  :category_id,
-                                     :location => [],
-                                     address:    [:prefix, :street, :building_number, :modifier],
+      params.require(:map_object).permit(:name,  :category_id,
+                                   :location => [],
+                                   address:    [:prefix, :street, :building_number, :modifier],
 
-                                     before_photos: [:link],
-                                     after_photos:  [:link]
-                                     #{ before_photos: :link },
-                                     #{ after_photos: :link }
-        )
+                                   before_photos: [:link],
+                                   after_photos:  [:link]
+                                   #{ before_photos: :link },
+                                   #{ after_photos: :link }
+      )
 
-      end
     end
 
 end
