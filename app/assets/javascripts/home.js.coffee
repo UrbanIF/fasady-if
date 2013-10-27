@@ -133,7 +133,7 @@ $ ->
       data:
         map_object:
           name:          'teststst'
-          category_id:   '526c9b17726f73eb72020000'
+          category_id:   '526ca064726f73ec73050000'
           location:     [48.917657,24.71507]
           address:
             prefix: 'вул.'
