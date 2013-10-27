@@ -3,11 +3,7 @@
   %header.site_header
     .container
       %span.question_sign ?
-
       %h1.site_title Takealook.if.ua
-
-
-
       -#%label.sorting_label а-я
 
 
@@ -24,7 +20,7 @@
         Заклади
         культури та освіти
     .marker-desc
-      .marker.orange
+      .marker.red
       .desc
         Заклади
         культури та освіти
@@ -49,3 +45,24 @@
 
   .search_container
     %input#search.search{type: 'text', placeholder: 'Введіть назву вулиці та номер будиноку'}
+
+  #add_object +
+
+
+#add_object_popup.popup_container
+  .popup_bg
+  .popup
+    .popup_inner
+      %h2.popup_title Додати об’єкт
+      .popup_top_fields
+        %input.popup_input.margin-right{placeholder: 'Назва об’єкта'}>
+        %input.popup_input{placeholder: 'Категорія об’єкта'}
+      %label.popup_top_fields-label наприклад: Ресторан «Корівка»
+      #add_object_map
+      .popup_search_container
+        %input#popup_search.search{placeholder: 'Адреса'}
+      .popup_add_files
+        .btn.add-image.margin-right> Фото існуючого стану
+        .btn.add-image Проект-пропозиція до об’єкта
+      %input.popup_input.popup_comment{placeholder: 'Короткий опис'}>
+      .btn.btn-short.save_object Додати

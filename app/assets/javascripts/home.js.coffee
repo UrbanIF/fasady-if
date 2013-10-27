@@ -57,7 +57,7 @@ $ ->
     for letter, buildings of hash
       lis = ''
       for b in buildings
-        lis += "<li class='object_name'>#{ b.address.street }, #{ b.address.building_number }</li>"
+        lis += "<li class='object_name' >#{ b.address.street }, #{ b.address.building_number }</li>"
       $('#letters_list').append "<li class='objects_block'><div class='letter'>#{letter}</div><ul class='letter_objects'>#{lis}</ul></li>"
 
 
