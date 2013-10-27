@@ -15,6 +15,9 @@ $ ->
     lat: 48.9260402
     lng: 24.74123899999995
     zoom: 13
+    markerClusterer: (map) ->
+     new  MarkerClusterer(map)
+
 
 
 
@@ -57,8 +60,16 @@ $ ->
     for letter, buildings of hash
       lis = ''
       for b in buildings
-        lis += "<li class='object_name'>#{ b.address.street }, #{ b.address.building_number }</li>"
+        lis += "<li data-lat='#{b.location[0]}' data-lng='#{b.location[1]}' class='object_name'>#{ b.address.street }, #{ b.address.building_number }</li>"
       $('#letters_list').append "<li class='objects_block'><div class='letter'>#{letter}</div><ul class='letter_objects'>#{lis}</ul></li>"
+
+
+  $(document).on 'click', '.object_name', ->
+    lat = $(this).data('lat')
+    lng = $(this).data('lng')
+    map.setCenter(lat, lng)
+    map.setZoom(18)
+
 
 
   initSearchField = (response)->
@@ -67,8 +78,9 @@ $ ->
       local: response
       limit: 10
 
-    $('#search').on 'typeahead:selected typeahead:autocompleted', (e)->
-      log e
+    $('#search').on 'typeahead:selected typeahead:autocompleted', (e, datum)->
+      map.setCenter(datum.location[0], datum.location[1])
+      map.setZoom(18)
 
 
   $.ajax

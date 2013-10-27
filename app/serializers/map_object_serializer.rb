@@ -30,5 +30,6 @@ class MapObjectSerializer < ActiveModel::Serializer
     .push(object.address.building_number.to_s)
     .push(object.address.prefix)
     .push(object.name)
+    .push(object.location.to_s)
   end
 end
