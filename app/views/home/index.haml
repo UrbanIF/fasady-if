@@ -32,7 +32,10 @@
       %h2.popup_title Додати об’єкт
       .popup_top_fields
         %input.popup_input.margin-right{placeholder: 'Назва об’єкта'}>
-        %input.popup_input{placeholder: 'Категорія об’єкта'}
+
+        %select#category_select.popup_select
+          %option{value: "", selected: "", disabled:""} Категорія об’єкта
+
       %label.popup_top_fields-label наприклад: Ресторан «Корівка»
       #add_object_map
       .popup_search_container

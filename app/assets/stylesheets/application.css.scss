@@ -10,6 +10,7 @@
  *
  *= require normalize
  *= require html5bp
+ *= require dropkick
  *= require_self
 */
 
@@ -143,6 +144,8 @@ body{
         .marker-desc{
             height: 40px;
             width: 130px;
+
+            cursor: pointer;
 
             margin-bottom: 12px;
 
@@ -313,6 +316,11 @@ body{
         margin-right: 64px;
     }
 
+    .popup_select{
+        float: right;
+        width: 362px;
+    }
+
     .popup_top_fields-label{
         display: block;
         font-size: 14px;
@@ -367,6 +375,9 @@ body{
         float: right;
     }
 }
+
+
+
 #add_object_map{
     height: 180px;
     width: 893px;

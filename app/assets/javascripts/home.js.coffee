@@ -6,34 +6,92 @@ log = (a)-> console.log(a)
 
 $ ->
 
-  map = new GMaps
-    div: '#map'
-    lat: 48.9260402
-    lng: 24.74123899999995
-    zoom: 13
-    markerClusterer: (map) ->
-      new  MarkerClusterer(map)
+  window.App = {}
+
+  initMap = ()->
+    window.App.map = new GMaps
+      div: '#map'
+      lat: 48.9260402
+      lng: 24.74123899999995
+      zoom: 13
+#      zoomControl: false
+#      disableDefaultUI: true
+
+
+      zoomControlOptions:
+        style: google.maps.ZoomControlStyle.SMALL
+        position: google.maps.ControlPosition.RIGHT_TOP
+
+      panControlOptions:
+        position: google.maps.ControlPosition.RIGHT_TOP
+
+      scaleControlOptions:
+        position: google.maps.ControlPosition.RIGHT_BOTTOM
+
+
+      markerClusterer: (map) ->
+        new  MarkerClusterer(map)
+
+
+    App.map.addStyle
+      styledMapName:
+        name: "Lighter"
+
+      mapTypeId: "lighter"
+      styles: [
+        elementType: "geometry"
+        stylers: [
+          saturation: -90
+          color: "#e3e2e1"
+          lightness: 0
+          weight: 0.5
+        ]
+      ,
+        featureType: 'road.highway',
+        elementType: 'geometry',
+        stylers: [
+          color: '#c1bba5'
+        ]
+      ,
+        elementType: "labels"
+        stylers: [visibility: "on"]
+      ,
+        featureType: "water"
+        stylers: [color: "#cbd2da"]
+      ]
+
+    App.map.setStyle('lighter')
+
+
+  initMap()
 
 
 
   $(document).on 'click', '.object_name', ->
     lat = $(this).data('lat')
     lng = $(this).data('lng')
-    map.setCenter(lat, lng)
-    map.setZoom(18)
+    App.map.setCenter(lat, lng)
+    App.map.setZoom(18)
 
 
 
 
   setMarkers = (response)->
+    markers_data = []
     for map_object in response
-      map.addMarker
+      markers_data.push
         lat: map_object.location[0]
         lng: map_object.location[1]
         title: map_object.name
         icon: "/assets/marker-#{map_object.color}.png"
         infoWindow:
           content: "<p>#{map_object.name}</p>"
+        click: ()->
+          log 'click'
+#        mouseover:
+#        mouseout:
+    App.map.addMarkers(markers_data)
+
 
   fillLeftPanelBuildingsList = (response)->
 
@@ -68,23 +126,27 @@ $ ->
       limit: 10
 
     $('#search').on 'typeahead:selected typeahead:autocompleted', (e, datum)->
-      map.setCenter(datum.location[0], datum.location[1])
-      map.setZoom(18)
+      App.map.setCenter(datum.location[0], datum.location[1])
+      App.map.setZoom(18)
 
   fillCategories = (response)->
     for category in response
       $('#categories').append "<div class='marker-desc'><div class='marker #{category.color}'></div><div class='desc'>#{category.name}</div></div>"
 
+      $('#category_select').append "<option value='#{category.id}'>#{category.name}</option>"
+
   $.ajax
     method: 'GET'
     url: '/api/map_objects/categories.json'
     success: (response)->
+      App.categories = response
       fillCategories(response)
 
   $.ajax
     method: 'GET'
     url: '/api/map_objects.json'
     success: (response)->
+      App.mapObjects = response
       setMarkers(response)
       fillLeftPanelBuildingsList(response)
       initSearchField(response)
@@ -93,6 +155,11 @@ $ ->
 
 
   $(document).on 'click', '.open-popup', ->
+
+    $('#category_select').dropkick()
+
+#    category_select
+
     $( '#' + $(this).data('id') ).addClass('active')
 
     map_add = new GMaps
@@ -100,14 +167,68 @@ $ ->
       lat: 48.9260402
       lng: 24.74123899999995
       zoom: 13
+      zoomControlOptions:
+        style: google.maps.ZoomControlStyle.SMALL
+        position: google.maps.ControlPosition.RIGHT_TOP
+      panControlOptions:
+        position: google.maps.ControlPosition.RIGHT_TOP
+      streetViewControl: false
+      scaleControlOptions:
+        position: google.maps.ControlPosition.RIGHT_BOTTOM
+
+
+    map_add.addStyle
+      styledMapName:
+        name: "Lighter"
+
+      mapTypeId: "lighter"
+      styles: [
+        elementType: "geometry"
+        stylers: [
+          saturation: -90
+          color: "#e3e2e1"
+          lightness: 0
+          weight: 0.5
+        ]
+      ,
+        featureType: 'road.highway',
+        elementType: 'geometry',
+        stylers: [
+          color: '#c1bba5'
+        ]
+      ,
+        elementType: "labels"
+        stylers: [visibility: "on"]
+      ,
+        featureType: "water"
+        stylers: [color: "#cbd2da"]
+      ]
+
+    map_add.setStyle('lighter')
 
     map_add.addMarker
       lat: 48.9260402
       lng: 24.74123899999995
       icon: '/assets/marker-add.png'
+      draggable: true
 
 
-#    GMaps.geocode
+
+    GMaps.on "click", map_add.map, (event) ->
+
+      map_add.removeMarkers()
+      lat = event.latLng.lat()
+      lng = event.latLng.lng()
+
+      map_add.addMarker
+        lat: lat
+        lng: lng
+        icon: '/assets/marker-add.png'
+        draggable: true
+
+
+
+  #    GMaps.geocode
 #
 #      address: $("#popup_search").val()
 #
@@ -124,7 +245,7 @@ $ ->
 
 
   $(document).on 'click', '.popup_bg', ->
-    $( '.popup_container' ).removeClass('active')
+    $(this).parents( '.popup_container' ).removeClass('active')
 
   $(document).on 'click', '#submit_object', ->
     $.ajax
@@ -133,8 +254,8 @@ $ ->
       data:
         map_object:
           name:          'teststst'
-          category_id:   '526ca064726f73ec73050000'
-          location:     [48.917657,24.71507]
+          category_id:   '526ce327726f73f036050000'
+          location:     [48.917657 + Math.random()/100, 24.71507 + Math.random()/100]
           address:
             prefix: 'вул.'
             street: 'Маланюка'
@@ -144,10 +265,22 @@ $ ->
 #          before_photos: [ {link: 'test' }]
 #          after_photos:  [ {link: 'test' }]
 
-      success: (response)->
-        log response
+      success: (data, textStatus, xhr)->
+        alert xhr.status
 
 
+
+
+  filterObjectsByCategory = (categoryName)->
+    objectsFiltered = (object for object in App.mapObjects when object.category == categoryName)
+    App.map.removeMarkers()
+    App.map.markerClusterer.clearMarkers()
+    setMarkers(objectsFiltered)
+
+
+  $(document).on 'click', '.marker-desc', ->
+    categoryName = $(this).find('.desc').html()
+    filterObjectsByCategory(categoryName)
 
 
 
