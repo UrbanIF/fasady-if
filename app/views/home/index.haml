@@ -2,10 +2,9 @@
 
   %header.site_header
     .container
-      %span.question_sign ?
+      %span#about_toggle.question_sign ?
       %h1.site_title Takealook.if.ua
       -#%label.sorting_label а-я
-
 
   .left_panel-content_container
     .left_panel-content
@@ -17,12 +16,29 @@
 
 
 .right_container
-  #map
 
-  .search_container
-    %input#search.search{type: 'text', placeholder: 'Введіть назву вулиці та номер будиноку'}
+  #about
+    .about_container
+      %h2.about_title Про проект
+      .about_text
+        %p Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc. Etiam pharetra, erat sed fermentum feugiat, velit mauris egestas quam, ut aliquam massa nisl quis neque. Suspendisse in orci enim.
+        %p Text testsafasdfasdf
+        %p Text testsafasdfasdf
+        %p Text testsafasdfasdf
 
-  #add_object.open-popup{'data-id' => 'add_object_popup'} +
+
+
+
+  #map_and_object
+    #map
+    .search_container
+      %input#search.search{type: 'text', placeholder: 'Введіть назву вулиці та номер будинку'}
+
+    #add_object +
+
+
+    #map_object
+
 
 
 #add_object_popup.popup_container
@@ -30,18 +46,34 @@
   .popup
     .popup_inner
       %h2.popup_title Додати об’єкт
-      .popup_top_fields
-        %input.popup_input.margin-right{placeholder: 'Назва об’єкта'}>
+      %form
+        .popup_top_fields
+          %input#map_object_name.popup_input.margin-right{placeholder: 'Назва об’єкта'}>
 
-        %select#category_select.popup_select
-          %option{value: "", selected: "", disabled:""} Категорія об’єкта
+          %select#category_select.popup_select
+            %option{value: "", selected: "", disabled:""} Категорія об’єкта
 
-      %label.popup_top_fields-label наприклад: Ресторан «Корівка»
-      #add_object_map
-      .popup_search_container
-        %input#popup_search.search{placeholder: 'Адреса'}
-      .popup_add_files
-        .btn.add-image.margin-right> Фото існуючого стану
-        .btn.add-image Проект-пропозиція до об’єкта
-      %input.popup_input.popup_comment{placeholder: 'Короткий опис'}>
-      .btn.btn-short.save_object#submit_object Додати
+        %label.popup_top_fields-label наприклад: Ресторан «Корівка»
+        #add_object_map
+        .popup_search_container
+          %input#popup_search.search{placeholder: 'Адреса'}
+        .popup_add_files
+          .btn.add-image.margin-right> Фото існуючого стану
+          .btn.add-image Проект-пропозиція до об’єкта
+        %input.popup_input.popup_comment{placeholder: 'Короткий опис'}>
+
+        %input#file-field{type: "file", name: "file", multiple: "true"}
+        #img-container
+          %ul#img-list
+
+        .btn.btn-short.save_object#submit_object Додати
+
+
+#addition_success-popup.popup_container
+  .popup_bg
+  .popup
+    .popup_inner
+      %a.add_success-to_project-icon
+      %a.add_success-to_project-text перглянути проект
+      %p.add_success-description Об’єкт упішно додано! </br> Дякуємо!
+      %span.add_success-success-icon

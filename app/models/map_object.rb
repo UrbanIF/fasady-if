@@ -15,6 +15,8 @@ class MapObject
 
   embeds_one :address
 
+  accepts_nested_attributes_for :before_photos, :after_photos, :address
+
 end
 
 

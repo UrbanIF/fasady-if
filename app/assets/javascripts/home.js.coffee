@@ -21,10 +21,8 @@ $ ->
       zoomControlOptions:
         style: google.maps.ZoomControlStyle.SMALL
         position: google.maps.ControlPosition.RIGHT_TOP
-
       panControlOptions:
         position: google.maps.ControlPosition.RIGHT_TOP
-
       scaleControlOptions:
         position: google.maps.ControlPosition.RIGHT_BOTTOM
 
@@ -64,6 +62,8 @@ $ ->
 
 
   initMap()
+
+
 
 
 
@@ -154,15 +154,12 @@ $ ->
 
 
 
-  $(document).on 'click', '.open-popup', ->
+  $(document).on 'click', '#add_object', ->
 
     $('#category_select').dropkick()
+    $('#add_object_popup').addClass('active')
 
-#    category_select
-
-    $( '#' + $(this).data('id') ).addClass('active')
-
-    map_add = new GMaps
+    window.App.map_add = new GMaps
       div: '#add_object_map'
       lat: 48.9260402
       lng: 24.74123899999995
@@ -177,7 +174,7 @@ $ ->
         position: google.maps.ControlPosition.RIGHT_BOTTOM
 
 
-    map_add.addStyle
+    App.map_add.addStyle
       styledMapName:
         name: "Lighter"
 
@@ -204,9 +201,10 @@ $ ->
         stylers: [color: "#cbd2da"]
       ]
 
-    map_add.setStyle('lighter')
+    App.map_add.setStyle('lighter')
 
-    map_add.addMarker
+
+    App.map_add.addMarker
       lat: 48.9260402
       lng: 24.74123899999995
       icon: '/assets/marker-add.png'
@@ -214,13 +212,13 @@ $ ->
 
 
 
-    GMaps.on "click", map_add.map, (event) ->
+    GMaps.on "click", App.map_add.map, (event) ->
 
-      map_add.removeMarkers()
+      App.map_add.removeMarkers()
       lat = event.latLng.lat()
       lng = event.latLng.lng()
 
-      map_add.addMarker
+      App.map_add.addMarker
         lat: lat
         lng: lng
         icon: '/assets/marker-add.png'
@@ -247,15 +245,20 @@ $ ->
   $(document).on 'click', '.popup_bg', ->
     $(this).parents( '.popup_container' ).removeClass('active')
 
+  $(document).on 'click', '#about_toggle', ->
+    $('#about').toggleClass('active')
+
+
+
   $(document).on 'click', '#submit_object', ->
     $.ajax
       method: 'POST'
       url: '/api/map_objects.json'
       data:
         map_object:
-          name:          'teststst'
-          category_id:   '526ce327726f73f036050000'
-          location:     [48.917657 + Math.random()/100, 24.71507 + Math.random()/100]
+          name:          $('#map_object_name').val()
+          category_id:   $('#category_select').val()
+          location:      [ App.map_add.markers[0].position.lb, App.map_add.markers[0].position.mb ]
           address:
             prefix: 'вул.'
             street: 'Маланюка'
@@ -265,8 +268,10 @@ $ ->
 #          before_photos: [ {link: 'test' }]
 #          after_photos:  [ {link: 'test' }]
 
-      success: (data, textStatus, xhr)->
-        alert xhr.status
+    .done ()->
+      $('#add_object_popup').removeClass('active')
+      $('#addition_success-popup').addClass('active')
+    .fail()
 
 
 

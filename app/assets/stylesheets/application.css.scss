@@ -16,6 +16,10 @@
 
 @import "compass";
 
+
+$blue: #4d8ffd;
+$dark: #585d64;
+
 html, body{
     height: 100%;
 }
@@ -23,7 +27,7 @@ html, body{
 body{
     font-family: 'Open Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
-    color: #585d64;
+    color: $dark;
     font-size: 18px;
     background-color: green;
 }
@@ -32,6 +36,23 @@ body{
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+
+::-webkit-input-placeholder { color: $dark; font-weight: 300; font-size: 18px; }
+:-moz-placeholder { color: $dark; font-weight: 300; font-size: 18px; }
+::-moz-placeholder { color: $dark; font-weight: 300; font-size: 18px; }
+:-ms-input-placeholder { color: $dark; font-weight: 300; font-size: 18px; }
+.placeholder { color: $dark; font-weight: 300; font-size: 18px; }
+
+
+h1, h2, h3, h4, h5, h6{
+    font-weight: 300;
+}
+
+
+.circle{
+    @include border-radius(50%);
 }
 
 
@@ -59,6 +80,7 @@ body{
             font-weight: 300;
         }
         .question_sign{
+            @extend .circle;
             display: block;
             width: 26px;
             height: 26px;
@@ -66,9 +88,9 @@ body{
             font-size: 18.6px;
             color: #fff;
             background: #74777b;
-            @include border-radius(50%);
             padding-left: 9px;
             margin-top: 12px;
+            cursor: pointer;
         }
         .sorting_label{
             font-weight: 700;
@@ -176,87 +198,131 @@ body{
 
         }
 
+//         RIGHT
+
 .right_container{
     width: 100%;
     height: 100%;
     padding-left: 450px;
     position: relative;
 }
-
-    #map{
+    #map_and_object{
         width: 100%;
         height: 100%;
     }
 
+    .show-object{
+        #map{ height: 154px;}
+        .search_container, #add_object{ display: none; }
+    }
+
+        #map{
+            width: 100%;
+            height: 100%;
+        }
 
 
 
-    .search_container{
+        .search_container{
+            position: absolute;
+            top: 20px;
+            left: 469px;
+            z-index: 999;
+        }
+
+            .plate{
+                width: 472px;
+                height: 60px;
+                @include border-radius(3px);
+                color: $dark;
+                font-weight: 500;
+                font-size: 18px;
+                border: none;
+                background: #fff;
+                padding: 10px 30px;
+            }
+
+            input{
+                @extend .plate;
+
+                &:focus{
+                    outline: none;
+                    //@include box-shadow(inset 1px 1px 2px #c9c9c9, 0 0 0 2px #f3e97f);
+                }
+                &.search{
+                    padding-right: 80px;
+                    background-image: inline-image("search.png");
+                    background-repeat: no-repeat;
+                    background-position: right center;
+                }
+            }
+
+            .tt-suggestion{
+                @extend .plate;
+                line-height: 42px;
+                margin: 5px 0;
+                p{
+                    margin: 0;
+                }
+            }
+
+        #add_object{
+            @extend .circle;
+            width: 74px;
+            height: 74px;
+            position: absolute;
+            right: 75px;
+            bottom: 65px;
+            color: $blue;
+            background: #fff;
+            font-size: 74px;
+            font-weight: 300;
+            text-align: center;
+            line-height: 74px;
+            cursor: pointer;
+        }
+
+        #map_object{
+            width: 100%;
+            height: 100%;
+            background: red;
+
+            padding-top: 154px;
+            margin-top: -154px;
+        }
+
+
+    #about{
+        width: 0;
+        @include transition(width 0.5s);
+
+        height: 100%;
+        z-index: 99999;
         position: absolute;
-        top: 20px;
-        left: 469px;
-        z-index: 999;
-    }
-    .plate{
-        width: 472px;
-        height: 60px;
-        @include border-radius(3px);
-        color: #585d64;
-        font-weight: 500;
-        font-size: 18px;
-        border: none;
         background: #fff;
-        padding: 10px 30px;
-    }
-    input{
-        @extend .plate;
-
-        &:focus{
-            outline: none;
-            //@include box-shadow(inset 1px 1px 2px #c9c9c9, 0 0 0 2px #f3e97f);
-        }
-        &.search{
-            padding-right: 80px;
-            background-image: inline-image("search.png");
-            background-repeat: no-repeat;
-            background-position: right center;
+        overflow: hidden;
+        @include box-shadow(rgba(0,0,0,0.1) 43px 0  43px -43px inset);
+        &.active{
+            width: 780px;
         }
     }
-
-
-    ::-webkit-input-placeholder { color: #585d64; font-weight: 300; font-size: 18px; }
-    :-moz-placeholder { color: #585d64; font-weight: 300; font-size: 18px; }
-    ::-moz-placeholder { color: #585d64; font-weight: 300; font-size: 18px; }
-    :-ms-input-placeholder { color: #585d64; font-weight: 300; font-size: 18px; }
-    .placeholder { color: #585d64; font-weight: 300; font-size: 18px; }
-
-    .tt-suggestion{
-        @extend .plate;
-        line-height: 42px;
-        margin: 5px 0;
-        p{
-            margin: 0;
+        .about_container{
+            padding: 21px 40px 40px 64px;
+            position: absolute;
+            width: 780px;
+            right: 0;
         }
-    }
+            .about_title{
+                font-size: 36px;
+                margin: 0;
+            }
+            .about_text{
+                font-weight: 300;
+                font-size: 18px;
+                line-height: 30px;
+                margin-top: 30px;
+            }
 
-
-
-
-    #add_object{
-        width: 74px;
-        height: 74px;
-        position: absolute;
-        right: 75px;
-        bottom: 65px;
-        color: #4d8ffd;
-        background: #fff;
-        font-size: 74px;
-        font-weight: 300;
-        text-align: center;
-        line-height: 74px;
-        @include border-radius(50%);
-        cursor: pointer;
-    }
 
 
 .popup_container{
@@ -342,7 +408,7 @@ body{
     }
         .btn{
             @extend .popup_input;
-            background: #4d8ffd;
+            background: $blue;
             line-height: 40px;
             color: #fff;
             cursor: pointer;
@@ -385,4 +451,127 @@ body{
     background: lightgray;
 }
 
+
+
+#add_object_popup{
+    .popup{
+        width: 893px;
+        height: 630px;
+    }
+
+    .popup_input{
+        width: 362px;
+        background: #ebebeb;
+        padding: 10px 18px;
+        @include border-radius(3px);
+    }
+    .margin-right{
+        margin-right: 64px;
+    }
+
+    .popup_select{
+        float: right;
+        width: 362px;
+    }
+
+    .popup_top_fields-label{
+        display: block;
+        font-size: 14px;
+        padding: 7px 18px 16px;
+    }
+
+    .popup_search_container{
+        position: absolute;
+        top: 210px;
+        z-index: 99999;
+    }
+    .search{
+        width: 362px;
+    }
+
+
+    .popup_add_files{
+        margin: 20px 0 10px;
+    }
+    .btn{
+        @extend .popup_input;
+        background: $blue;
+        line-height: 40px;
+        color: #fff;
+        cursor: pointer;
+    }
+    .btn-short{
+        width: 162px;
+
+    }
+
+    .add-image{
+        display: inline-block;
+
+        padding-right: 30px;
+        background-image: inline-image("add-file.png");
+        background-repeat: no-repeat;
+        background-position: right center;
+
+
+    }
+    .popup_comment{
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .save_object{
+        padding-right: 30px;
+        background-image: inline-image("plus.png");
+        background-repeat: no-repeat;
+        background-position: right center;
+        float: right;
+    }
+}
+
+#addition_success-popup{
+    .popup{
+        @extend .circle;
+        width: 384px;
+        height: 384px;
+        padding: 50px 40px 55px;
+        text-align: center;
+    }
+        .add_success-to_project-icon{
+            @extend .circle;
+            display: block;
+            width: 31px;
+            height: 31px;
+            margin: auto;
+            background-color: $dark;
+            cursor: pointer;
+
+            background-image: inline-image("icon-arrow-right.png");
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+        .add_success-to_project-text{
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: underline;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+        .add_success-description{
+            font-size: 24px;
+            font-weight: 600;
+            margin: 60px 0 50px;
+        }
+        .add_success-success-icon{
+            @extend .circle;
+            display: block;
+            width: 45px;
+            height: 45px;
+            margin: auto;
+            background-color: $blue;
+            background-image: inline-image("icon-success.png");
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+}
 

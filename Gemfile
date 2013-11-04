@@ -13,7 +13,7 @@ gem 'mongoid', '~> 4', :github=>"mongoid/mongoid"
 gem 'simple_form', '>= 3.0.0.rc'
 
 
-gem 'rails_admin'
+gem "rails_admin", :require => 'rails_admin', :git => 'git://github.com/sferik/rails_admin'
 
 gem 'inherited_resources', github: 'josevalim/inherited_resources'
 gem 'has_scope', github: 'plataformatec/has_scope'

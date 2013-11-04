@@ -16,6 +16,10 @@ class MapObjectSerializer < ActiveModel::Serializer
     object.category.color
   end
 
+  def letter
+    object.address.street[0]
+  end
+
   #for twitter typehead
   def value
     if object.address.modifier
@@ -25,9 +29,6 @@ class MapObjectSerializer < ActiveModel::Serializer
     end
   end
 
-  def letter
-    object.address.street[0]
-  end
 
   def tokens
     object.address.street.split(/[\s,.-]+/)

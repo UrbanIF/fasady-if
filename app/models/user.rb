@@ -49,6 +49,7 @@ class User
 
 
   has_many :map_objects
+  accepts_nested_attributes_for :map_objects
   #has_many :photos
 
 
