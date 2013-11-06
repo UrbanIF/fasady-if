@@ -9,15 +9,15 @@ class MapObjectSerializer < ActiveModel::Serializer
   end
 
   def category
-    object.category.name
+    object.category.name if object.category
   end
 
   def color
-    object.category.color
+    object.category.color if object.category
   end
 
   def letter
-    object.address.street[0]
+    object.address.street[0] if object.address
   end
 
   #for twitter typehead

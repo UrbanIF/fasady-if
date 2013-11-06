@@ -1,17 +1,14 @@
 log = (a)-> console.log(a)
 
 $ ->
-
   class Fasady
     mainMap: null
     popupMap: null
     map_object_json: null
     categories_json: null
 
-
     constructor: ->
-      @mainMap = @_getInitedMap('#map')
-      @_applyStyleToMap(@mainMap)
+      @mainMap = (new window.Map('#map', true)).map
 
       @_clicksHandling()
 
@@ -32,7 +29,6 @@ $ ->
           @createMapMarkersOnMainMap(@map_object_json)
           @fillLeftPanelBuildingsList()
           @initSearchField()
-
 
     _clicksHandling: ->
       self = @
@@ -55,57 +51,27 @@ $ ->
         categoryName = $(this).find('.desc').html()
         self._filterObjectsByCategory(categoryName)
 
+    #   $(document).on 'click', '#submit_object', =>
+    #     $.ajax
+    #       method: 'POST'
+    #       url: '/api/map_objects.json'
+    #       data:
+    #         map_object:
+    #           name:          $('#map_object_name').val()
+    #           category_id:   $('#category_select').val()
+    #           location:      [ @popupMap.markers[0].position.lb, @popupMap.markers[0].position.mb ]
+    #           address:
+    #             prefix: 'вул.'
+    #             street: 'Маланюка'
+    #             building_number: 10
+    #             modifier: ''
 
+    # #          before_photos: [ {link: 'test' }]
+    # #          after_photos:  [ {link: 'test' }]
 
-      $(document).on 'click', '#add_object', =>
-
-        $('#add_object_popup').addClass('active')
-
-        $('#category_select').dropkick()
-
-        @popupMap = @_getInitedMap('#add_object_map')
-        @_applyStyleToMap(@popupMap)
-        @popupMap.addMarker
-          lat: 48.9260402
-          lng: 24.74123899999995
-          icon: '/assets/marker-add.png'
-          draggable: true
-
-
-        GMaps.on "click", @popupMap.map, (event) =>
-          @popupMap.removeMarkers()
-          @popupMap.addMarker
-            lat: event.latLng.lat()
-            lng: event.latLng.lng()
-            icon: '/assets/marker-add.png'
-            draggable: true
-
-
-
-      $(document).on 'click', '#submit_object', =>
-        $.ajax
-          method: 'POST'
-          url: '/api/map_objects.json'
-          data:
-            map_object:
-              name:          $('#map_object_name').val()
-              category_id:   $('#category_select').val()
-              location:      [ @popupMap.markers[0].position.lb, @popupMap.markers[0].position.mb ]
-              address:
-                prefix: 'вул.'
-                street: 'Маланюка'
-                building_number: 10
-                modifier: ''
-
-    #          before_photos: [ {link: 'test' }]
-    #          after_photos:  [ {link: 'test' }]
-
-        .done ()->
-            $('#add_object_popup').removeClass('active')
-            $('#addition_success-popup').addClass('active')
-        .fail()
-
-
+    #     .done ()->
+    #
+    #     .fail()
 
     createMapMarkersOnMainMap: (map_objects)->
       self = @
@@ -132,8 +98,6 @@ $ ->
               5
             )
       @mainMap.addMarkers(markers)
-
-
 
     fillCategories: ->
       for category in @categories_json
@@ -165,7 +129,6 @@ $ ->
           lis += "<li data-lat='#{b.location[0]}' data-lng='#{b.location[1]}' class='object_name'>#{ b.address.street }, #{ b.address.building_number }</li>"
         $('#letters_list').append "<li class='objects_block'><div class='letter'>#{letter}</div><ul class='letter_objects'>#{lis}</ul></li>"
 
-
     _filterObjectsByCategory: (categoryName) =>
       @mainMap.removeMarkers()
       @mainMap.markerClusterer.clearMarkers()
@@ -176,10 +139,6 @@ $ ->
         objectsFiltered = (object for object in @map_object_json when object.category == categoryName)
       @createMapMarkersOnMainMap(objectsFiltered)
 
-
-
-
-
     initSearchField: ->
       $('#search').typeahead
         name: 'streets'
@@ -189,53 +148,6 @@ $ ->
       $('#search').on 'typeahead:selected typeahead:autocompleted', (e, datum)=>
         @mainMap.setCenter(datum.location[0], datum.location[1])
         @mainMap.setZoom(18)
-
-
-
-
-    _getInitedMap: (map_id)->
-      new GMaps
-        div: map_id
-        lat: 48.9260402
-        lng: 24.74123899999995
-        zoom: 13
-        zoomControlOptions:
-          style: google.maps.ZoomControlStyle.SMALL
-          position: google.maps.ControlPosition.RIGHT_TOP
-        panControlOptions:
-          position: google.maps.ControlPosition.RIGHT_TOP
-        scaleControlOptions:
-          position: google.maps.ControlPosition.RIGHT_BOTTOM
-        markerClusterer: (map) ->
-          new  MarkerClusterer(map)
-
-    _applyStyleToMap: (map)->
-      map.addStyle
-        styledMapName:
-          name: "Lighter"
-        mapTypeId: "lighter"
-        styles: [
-          elementType: "geometry"
-          stylers: [
-            saturation: -90
-            color: "#e3e2e1"
-            lightness: 0
-            weight: 0.5
-          ]
-        ,
-          featureType: 'road.highway',
-          elementType: 'geometry',
-          stylers: [
-            color: '#c1bba5'
-          ]
-        ,
-          elementType: "labels"
-          stylers: [visibility: "on"]
-        ,
-          featureType: "water"
-          stylers: [color: "#cbd2da"]
-        ]
-      map.setStyle('lighter')
 
 
   window.fasady = new Fasady()

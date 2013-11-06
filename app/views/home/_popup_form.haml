@@ -3,7 +3,7 @@
   .popup
     .popup_inner
       %h2.popup_title Додати об’єкт
-      %form
+      %form#object_form{action: '/api/map_objects.json'}
         .popup_top_fields
           %input#map_object_name.popup_input.margin-right{placeholder: 'Назва об’єкта'}>
 
@@ -27,7 +27,7 @@
         #img-container
           %ul#img-list
 
-        .btn.btn-short.save_object#submit_object Додати
+        %input.btn.btn-short.save_object#submit_object{type: 'submit'} Додати
 
 
 #addition_success-popup.popup_container
