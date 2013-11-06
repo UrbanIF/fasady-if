@@ -4,6 +4,7 @@ class MapObject
 
   field :name, type: String
   field :location, type: Array
+  field :description, type: String
 
   belongs_to :category
   belongs_to :user
