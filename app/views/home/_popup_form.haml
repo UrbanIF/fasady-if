@@ -15,8 +15,12 @@
         .popup_search_container
           %input#popup_search.search{placeholder: 'Адреса'}
         .popup_add_files
-          .btn.add-image.margin-right> Фото існуючого стану
-          .btn.add-image Проект-пропозиція до об’єкта
+          .btn.add-image.margin-right>
+            Фото існуючого стану
+            %input.add-image_input{name: 'map_object[filename]', type: 'file'}
+          .btn.add-image
+            Проект-пропозиція до об’єкта
+            %input.add-image_input{name: 'map_object[filename]', type: 'file'}
         %input.popup_input.popup_comment{placeholder: 'Короткий опис'}>
 
         / %input#file-field{type: "file", name: "file", multiple: "true"}

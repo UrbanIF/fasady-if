@@ -512,14 +512,25 @@ h1, h2, h3, h4, h5, h6{
 
     .add-image{
         display: inline-block;
-
         padding-right: 30px;
         background-image: inline-image("add-file.png");
         background-repeat: no-repeat;
         background-position: right center;
-
-
+        position: relative;
     }
+        .add-image_input{
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            -moz-opacity: 0;
+            text-indent: -99px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+        }
+
     .popup_comment{
         width: 100%;
         margin-bottom: 20px;
