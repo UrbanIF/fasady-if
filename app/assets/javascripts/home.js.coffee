@@ -1,7 +1,3 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-
 log = (a)-> console.log(a)
 
 $ ->
@@ -112,6 +108,7 @@ $ ->
 
 
     createMapMarkersOnMainMap: (map_objects)->
+      self = @
       markers = []
       for map_object in map_objects
         markers.push
@@ -121,8 +118,19 @@ $ ->
           icon: "/assets/marker-#{map_object.color}.png"
           infoWindow:
             content: "<p>#{map_object.name}</p>"
-          click: ()->
-            log 'click'
+          click: (e)=>
+            $('.right_container').addClass('show-object')
+            i = 0
+            interv = setInterval(
+              =>
+                @mainMap.refresh()
+                @mainMap.setCenter(e.position.lb, e.position.mb)
+                @mainMap.setZoom(18)
+                i = i + 5
+                if i > 600
+                  clearInterval(interv)
+              5
+            )
       @mainMap.addMarkers(markers)
 
 
@@ -131,6 +139,7 @@ $ ->
       for category in @categories_json
         $('#categories').append "<div class='marker-desc'><div class='marker #{category.color}'></div><div class='desc'>#{category.name}</div></div>"
         $('#category_select').append "<option value='#{category.id}'>#{category.name}</option>"
+      $('#categories').append "<div class='marker-desc'><div class='marker yellow'></div><div class='desc'>Усе</div></div>"
 
     fillLeftPanelBuildingsList: ->
       arrToHash = (orig) ->
@@ -158,11 +167,15 @@ $ ->
 
 
     _filterObjectsByCategory: (categoryName) =>
-      objectsFiltered = (object for object in @map_object_json when object.category == categoryName)
-      log objectsFiltered
       @mainMap.removeMarkers()
       @mainMap.markerClusterer.clearMarkers()
+
+      if categoryName == 'Усе'
+        objectsFiltered = @map_object_json
+      else
+        objectsFiltered = (object for object in @map_object_json when object.category == categoryName)
       @createMapMarkersOnMainMap(objectsFiltered)
+
 
 
 
@@ -186,8 +199,6 @@ $ ->
         lat: 48.9260402
         lng: 24.74123899999995
         zoom: 13
-  #      zoomControl: false
-  #      disableDefaultUI: true
         zoomControlOptions:
           style: google.maps.ZoomControlStyle.SMALL
           position: google.maps.ControlPosition.RIGHT_TOP
@@ -195,7 +206,6 @@ $ ->
           position: google.maps.ControlPosition.RIGHT_TOP
         scaleControlOptions:
           position: google.maps.ControlPosition.RIGHT_BOTTOM
-
         markerClusterer: (map) ->
           new  MarkerClusterer(map)
 
@@ -203,7 +213,6 @@ $ ->
       map.addStyle
         styledMapName:
           name: "Lighter"
-
         mapTypeId: "lighter"
         styles: [
           elementType: "geometry"
@@ -226,10 +235,7 @@ $ ->
           featureType: "water"
           stylers: [color: "#cbd2da"]
         ]
-
       map.setStyle('lighter')
 
 
-
-
-  new Fasady()
+  window.fasady = new Fasady()

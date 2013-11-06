@@ -205,6 +205,7 @@ h1, h2, h3, h4, h5, h6{
     height: 100%;
     padding-left: 450px;
     position: relative;
+    overflow: hidden;
 }
     #map_and_object{
         width: 100%;
@@ -213,12 +214,14 @@ h1, h2, h3, h4, h5, h6{
 
     .show-object{
         #map{ height: 154px;}
-        .search_container, #add_object{ display: none; }
+        .search_container,
+        #add_object{ display: none; }
     }
 
         #map{
             width: 100%;
             height: 100%;
+            @include transition(height 0.5s);
         }
 
 
@@ -287,8 +290,10 @@ h1, h2, h3, h4, h5, h6{
             height: 100%;
             background: red;
 
-            padding-top: 154px;
+            //padding-top: 154px;
             margin-top: -154px;
+
+            padding: 170px 26px 31px 36px;
         }
 
 
@@ -365,82 +370,82 @@ h1, h2, h3, h4, h5, h6{
 
 
 
-#add_object_popup{
-    .popup{
-        width: 893px;
-        height: 826px;
-        height: 630px;
-    }
-
-    .popup_input{
-        width: 362px;
-        background: #ebebeb;
-        padding: 10px 18px;
-        @include border-radius(3px);
-    }
-    .margin-right{
-        margin-right: 64px;
-    }
-
-    .popup_select{
-        float: right;
-        width: 362px;
-    }
-
-    .popup_top_fields-label{
-        display: block;
-        font-size: 14px;
-        padding: 7px 18px 16px;
-    }
-
-    .popup_search_container{
-        position: absolute;
-        top: 210px;
-        z-index: 99999;
-    }
-        .search{
-            width: 362px;
-        }
-
-
-    .popup_add_files{
-        margin: 20px 0 10px;
-    }
-        .btn{
-            @extend .popup_input;
-            background: $blue;
-            line-height: 40px;
-            color: #fff;
-            cursor: pointer;
-        }
-        .btn-short{
-            width: 162px;
-
-        }
-
-            .add-image{
-                display: inline-block;
-
-                padding-right: 30px;
-                background-image: inline-image("add-file.png");
-                background-repeat: no-repeat;
-                background-position: right center;
-
-
-            }
-    .popup_comment{
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .save_object{
-        padding-right: 30px;
-        background-image: inline-image("plus.png");
-        background-repeat: no-repeat;
-        background-position: right center;
-        float: right;
-    }
-}
+//#add_object_popup{
+//    .popup{
+//        width: 893px;
+//        height: 826px;
+//        height: 630px;
+//    }
+//
+//    .popup_input{
+//        width: 362px;
+//        background: #ebebeb;
+//        padding: 10px 18px;
+//        @include border-radius(3px);
+//    }
+//    .margin-right{
+//        margin-right: 64px;
+//    }
+//
+//    .popup_select{
+//        float: right;
+//        width: 362px;
+//    }
+//
+//    .popup_top_fields-label{
+//        display: block;
+//        font-size: 14px;
+//        padding: 7px 18px 16px;
+//    }
+//
+//    .popup_search_container{
+//        position: absolute;
+//        top: 210px;
+//        z-index: 99999;
+//    }
+//        .search{
+//            width: 362px;
+//        }
+//
+//
+//    .popup_add_files{
+//        margin: 20px 0 10px;
+//    }
+//        .btn{
+//            @extend .popup_input;
+//            background: $blue;
+//            line-height: 40px;
+//            color: #fff;
+//            cursor: pointer;
+//        }
+//        .btn-short{
+//            width: 162px;
+//
+//        }
+//
+//            .add-image{
+//                display: inline-block;
+//
+//                padding-right: 30px;
+//                background-image: inline-image("add-file.png");
+//                background-repeat: no-repeat;
+//                background-position: right center;
+//
+//
+//            }
+//    .popup_comment{
+//        width: 100%;
+//        margin-bottom: 20px;
+//    }
+//
+//    .save_object{
+//        padding-right: 30px;
+//        background-image: inline-image("plus.png");
+//        background-repeat: no-repeat;
+//        background-position: right center;
+//        float: right;
+//    }
+//}
 
 
 
