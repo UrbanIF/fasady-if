@@ -90,7 +90,7 @@ $ ->
             map_object:
               name:          $('#map_object_name').val()
               category_id:   $('#category_select').val()
-              location:      [ @popupMap.markers[0].position.lb, @popupMap.markers[0].position.mb ]
+              location:      [ @popupMap.markers[0].position.lat(), @popupMap.markers[0].position.lng() ]
               address:
                 prefix: 'вул.'
                 street: 'Маланюка'
@@ -124,12 +124,12 @@ $ ->
             interv = setInterval(
               =>
                 @mainMap.refresh()
-                @mainMap.setCenter(e.position.lb, e.position.mb)
+                @mainMap.setCenter(e.position.lat(), e.position.lng())
                 @mainMap.setZoom(18)
-                i = i + 5
+                i = i + 10
                 if i > 600
                   clearInterval(interv)
-              5
+              10
             )
       @mainMap.addMarkers(markers)
 
