@@ -295,10 +295,16 @@ h1, h2, h3, h4, h5, h6{
             @include box-shadow(rgba(0,0,0,0.1) 43px 192px  43px -47px inset);
         }
             #map_object_close{
-                position: absolute;
-                right: 27px;
-                top: 161px;
+                float: right;
                 cursor: pointer;
+                display: block;
+                background-color: #4d8ffd;
+                color: #fff;
+                width: 21px;
+                height: 21px;
+                text-align: center;
+                line-height: 18px;
+                font-weight: 500;
             }
             .map-object_header{
 

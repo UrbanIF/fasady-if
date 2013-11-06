@@ -52,18 +52,7 @@ $ ->
         self._filterObjectsByCategory(categoryName)
 
       $(document).on 'click', '#map_object_close', =>
-        $('.right_container').removeClass('show-object')
-        i = 0
-        center = @mainMap.getCenter()
-        interv = setInterval(
-          =>
-            @mainMap.refresh()
-            @mainMap.setCenter center.lat(), center.lng()
-            i = i + 5
-            if i > 600
-              clearInterval(interv)
-          5
-        )
+        @_closeObjectDescription()
 
 
     #   $(document).on 'click', '#submit_object', =>
@@ -106,21 +95,41 @@ $ ->
                 # fill map_object
                 $('#map_object_title').text(map_object.name)
                 $('#map_object_address').text "#{ map_object.address.prefix } #{ map_object.address.street }, #{ map_object.address.building_number }#{ map_object.address.modifier }"
+                @_openObjectDescription(e.position)
 
-                $('.right_container').addClass('show-object')
-                i = 0
-                interv = setInterval(
-                  =>
-                    @mainMap.refresh()
-                    @mainMap.setCenter(e.position.lat(), e.position.lng())
-                    @mainMap.setZoom(18)
-                    i = i + 5
-                    if i > 600
-                      clearInterval(interv)
-                  5
-                )
             )(map_object)
       @mainMap.addMarkers(markers)
+
+
+    _openObjectDescription: (position)=>
+      $('.right_container').addClass('show-object')
+      i = 0
+      interv = setInterval(
+        =>
+          @mainMap.refresh()
+          @mainMap.setCenter(position.lat(), position.lng())
+          @mainMap.setZoom(18)
+          i = i + 5
+          if i > 600
+            clearInterval(interv)
+        5
+      )
+
+    _closeObjectDescription: =>
+      $('.right_container').removeClass('show-object')
+      i = 0
+      center = @mainMap.getCenter()
+      interv = setInterval(
+        =>
+          @mainMap.refresh()
+          @mainMap.setCenter center.lat(), center.lng()
+          i = i + 5
+          if i > 600
+            clearInterval(interv)
+        5
+      )
+
+
 
     fillCategories: ->
       for category in @categories_json
