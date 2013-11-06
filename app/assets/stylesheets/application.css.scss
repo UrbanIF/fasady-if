@@ -297,6 +297,14 @@ h1, h2, h3, h4, h5, h6{
             #map_object_close{
                 float: right;
                 cursor: pointer;
+                display: block;
+                background-color: #4d8ffd;
+                color: #fff;
+                width: 21px;
+                height: 21px;
+                text-align: center;
+                line-height: 18px;
+                font-weight: 500;
             }
             .map-object_header{
 
