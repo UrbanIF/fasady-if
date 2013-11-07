@@ -31,10 +31,16 @@ class MapObjectPhotoUploader < CarrierWave::Uploader::Base
   #   # do something
   # end
 
+  #resize_and_pad(width, height, background=:transparent, gravity=::Magick::CenterGravity) will pad the remaining area with the given color, which defaults to transparent (for gif and png, white for jpeg).
+  #resize_to_fit                   The image may be shorter or narrower than specified
+  #resize_to_fill(width, height)   If necessary, crop the image in the larger dimension.“
+  #resize_to_limit(width, height)  Will only resize the image if it is larger than the specified dimensions. The resulting image may be shorter or narrower
+
+
   # Create different versions of your uploaded files:
-  # version :thumb do
-  #   process :scale => [50, 50]
-  # end
+  version :thumb do
+    process :resize_to_limit => [220, 220]
+  end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:

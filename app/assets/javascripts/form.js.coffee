@@ -19,11 +19,11 @@ class ObjectForm
       contentType: false
       processData: false
 
-    xhr.done ->
+    xhr.done =>
       @popup.removeClass('active')
       $('#addition_success-popup').addClass('active')
-    xhr.fail ->
-    xhr.always ->
+    xhr.fail =>
+    xhr.always =>
 
   showForm: =>
     @popup.addClass('active')
@@ -54,4 +54,4 @@ class ObjectForm
     obj.parents('.add-image').text(file.name)
 
 $ ->
-  window.objectForm = new ObjectForm();
+  window.objectForm = new ObjectForm()
