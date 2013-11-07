@@ -54,7 +54,10 @@ $ ->
       $(document).on 'click', '#map_object_close', =>
         @_closeObjectDescription()
 
-
+#      google.maps.event.addListener marker, 'mouseover', ((map)=>
+#        ()->
+#          infowindow.open(map, @)
+#      )(@mainMap.map)
     #   $(document).on 'click', '#submit_object', =>
     #     $.ajax
     #       method: 'POST'

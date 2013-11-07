@@ -26,8 +26,8 @@ class ObjectForm
     xhr.done =>
       @popup.removeClass('active')
       $('#addition_success-popup').addClass('active')
-    xhr.fail ->
-    xhr.always ->
+    xhr.fail =>
+    xhr.always =>
 
   showForm: =>
     @popup.addClass('active')
@@ -84,4 +84,4 @@ class ObjectForm
   #   @autocomplete = new google.maps.places.Autocomplete($("#popup_search")[0], options)
 
 $ ->
-  window.objectForm = new ObjectForm();
+  window.objectForm = new ObjectForm()

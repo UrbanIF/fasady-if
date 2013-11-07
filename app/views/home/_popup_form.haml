@@ -5,32 +5,32 @@
       %h2.popup_title Додати об’єкт
       %form#object_form{action: '/api/map_objects.json', enctype:"multipart/form-data"}
         .popup_top_fields
-          %input#map_object_name.popup_input.margin-right{name:'name',placeholder: 'Назва об’єкта'}>
+          %input#map_object_name.popup_input.margin-right{name:'map_object[name]',placeholder: 'Назва об’єкта'}>
 
-          %select#category_select.popup_select
-            %option{name:'category',value: "", selected: "", disabled:""} Категорія об’єкта
+          %select#category_select.popup_select{name:'map_object[category_id]'}
+            %option{value: "", selected: "", disabled:""} Категорія об’єкта
 
         %label.popup_top_fields-label наприклад: Ресторан «Корівка»
         #add_object_map
         .popup_search_container
-          %input#popup_search{name: 'adress',placeholder: 'Адреса'}
+          / todo fix that
+          %input#popup_search{name: 'map_object[address][street]',placeholder: 'Адреса'}
           %button.search_button
         .popup_add_files
           .btn.add-image.margin-right>
             Фото існуючого стану
-            %input.add-image_input{name: 'map_object[filename]', type: 'file'}
+            %input.add-image_input{name: 'map_object[before_photos_attributes][0][link]', type: 'file'}
           .btn.add-image
             Проект-пропозиція до об’єкта
-            %input.add-image_input{name: 'map_object[filename]', type: 'file'}
-          %input.lat{type:'hidden', name:'lat'}
-          %input.lng{type:'hidden', name:'lng'}
-        %input.popup_input.popup_comment{name:'desc',placeholder: 'Короткий опис'}>
+            %input.add-image_input{name: 'map_object[after_photos_attributes][0][link]', type: 'file'}
+          %input.lat{type:'hidden', name:'map_object[location][]'}
+          %input.lng{type:'hidden', name:'map_object[location][]'}
+        %input.popup_input.popup_comment{name:'map_object[description]',placeholder: 'Короткий опис'}>
 
-        / %input#file-field{type: "file", name: "file", multiple: "true"}
         #img-container
           %ul#img-list
 
-        %input.btn.btn-short.save_object#submit_object{type: 'submit'} Додати
+        %input.btn.btn-short.save_object#submit_object{type: 'submit', value: 'Додати'}
 
 
 #addition_success-popup.popup_container
