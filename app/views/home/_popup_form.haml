@@ -13,7 +13,8 @@
         %label.popup_top_fields-label наприклад: Ресторан «Корівка»
         #add_object_map
         .popup_search_container
-          %input#popup_search{name: 'adress',placeholder: 'Адреса'}
+          / todo fix that
+          %input#popup_search{name: 'map_object[address][street]',placeholder: 'Адреса'}
           %button.search_button
         .popup_add_files
           .btn.add-image.margin-right>
