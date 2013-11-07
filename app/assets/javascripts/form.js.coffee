@@ -15,6 +15,9 @@ class ObjectForm
 
   submit: (e)=>
     e.preventDefault()
+    # fd = new FormData()
+    # fd.append('map_object[before_photos_attributes][0][link]', $('.add-image_input')[0].files)
+    # fd.append('map_object[after_photos_attributes][0][link]', $('.add-image_input')[1].files)
     xhr = $.ajax
       type: "POST"
       url: @form.prop('action')
@@ -60,7 +63,7 @@ class ObjectForm
   fileSelected: ->
     obj = $(@)
     file = obj.prop('files')[0]
-    obj.parents('.add-image').text(file.name)
+    obj.parents('.add-image').children('i').text(file.name)
 
   geocode: (e)=>
     e.preventDefault()

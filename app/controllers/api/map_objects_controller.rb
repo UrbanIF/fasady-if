@@ -16,16 +16,17 @@ class Api::MapObjectsController < ApplicationController
 
 
   def create
-    puts 'xxxxxxxxxxxxxxxxxxxxx'
-    puts  map_object_params
+    # puts 'xxxxxxxxxxxxxxxxxxxxx'
+    # puts  map_object_params
 
-    mo = MapObject.create map_object_params
+    mo = MapObject.create! map_object_params
     mo.user = current_user
     mo.save!
 
-    puts  mo
+    # puts  mo
 
     render json: mo, status: 200
+    # render json: {}, status: 200
   end
 
   protected
@@ -35,7 +36,7 @@ class Api::MapObjectsController < ApplicationController
 
     def map_object_params
       params.require(:map_object).permit(:name,  :category_id, :description,
-                                   :location => [],
+                                   location: [],
                                    address:    [:prefix, :street, :building_number, :modifier],
 
                                    before_photos_attributes: [:link],
@@ -44,6 +45,6 @@ class Api::MapObjectsController < ApplicationController
                                    #{ after_photos: :link }
       )
 
-    end
+   end
 
 end
