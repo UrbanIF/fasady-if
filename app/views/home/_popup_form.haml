@@ -3,7 +3,7 @@
   .popup
     .popup_inner
       %h2.popup_title Додати об’єкт
-      %form#object_form{action: '/api/map_objects.json'}
+      %form#object_form{action: '/api/map_objects.json', enctype:"multipart/form-data"}
         .popup_top_fields
           %input#map_object_name.popup_input.margin-right{name:'name',placeholder: 'Назва об’єкта'}>
 

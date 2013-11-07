@@ -23,7 +23,7 @@ class ObjectForm
       contentType: false
       processData: false
 
-    xhr.done ->
+    xhr.done =>
       @popup.removeClass('active')
       $('#addition_success-popup').addClass('active')
     xhr.fail ->
