@@ -1,3 +1,5 @@
+# todo тільки залогінені можуть додавати об’єкти
+# todo пофіксити верстку в формі пошуку по доданих об’єктах
 class ObjectForm
   constructor: ->
     alert('old browser') if window.formData?
