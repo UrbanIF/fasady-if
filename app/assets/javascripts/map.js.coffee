@@ -8,8 +8,8 @@ class Map
   initMap: ->
     new GMaps
       div: @mapId
-      lat: 48.9260402
-      lng: 24.74123899999995
+      lat: 48.9228757160567
+      lng: 24.71033066511154
       zoom: 13
       zoomControlOptions:
         style: google.maps.ZoomControlStyle.SMALL

@@ -234,7 +234,7 @@ h1, h2, h3, h4, h5, h6{
         }
 
             .plate{
-                width: 472px;
+                width: 280px;
                 height: 60px;
                 @include border-radius(3px);
                 color: $dark;
@@ -242,7 +242,7 @@ h1, h2, h3, h4, h5, h6{
                 font-size: 18px;
                 border: none;
                 background: #fff;
-                padding: 10px 30px;
+                padding: 10px 10px;
             }
 
             input{
@@ -252,13 +252,19 @@ h1, h2, h3, h4, h5, h6{
                     outline: none;
                     //@include box-shadow(inset 1px 1px 2px #c9c9c9, 0 0 0 2px #f3e97f);
                 }
-                &.search{
-                    padding-right: 80px;
-                    background-image: inline-image("search.png");
-                    background-repeat: no-repeat;
-                    background-position: right center;
-                }
+
             }
+            .search_button{
+                    height:62px;
+                    width:72px;
+                    border:none;
+                    padding:0;
+                    position:relative;
+                    top: -7px;
+                    left: -10px;
+                    // padding-right: 80px;
+                    background-image: inline-image("search.png");
+                }
 
             .tt-suggestion{
                 @extend .plate;
