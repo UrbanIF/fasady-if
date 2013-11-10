@@ -32,8 +32,8 @@ module FasadyIf
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
-    config.twitter_consumer_key = '0Qzhm7ZLBO5RkGIk6Wqqnw'
-    config.twitter_consumer_secret = 'gSKR0lmKmpxPBWebUzyF6LQWRTGUOR1dSash1bVgo'
+    config.twitter_consumer_key = 'T2bmkT8hqPviNYcM0iznvg'
+    config.twitter_consumer_secret = '83IUu5jAOEzxwwZSQN4k3E70SdKtTVWyagGYovAIMP8'
 
     config.facebook_consumer_key = 316650425140795
     config.facebook_consumer_secret = '3f12a32f4bc4bb51516d466af880e97f'

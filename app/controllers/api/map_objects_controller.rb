@@ -30,10 +30,6 @@ class Api::MapObjectsController < ApplicationController
   end
 
   protected
-    def default_serializer_options
-      { root: false }
-    end
-
     def map_object_params
       params.require(:map_object).permit(:name,  :category_id, :description,
                                    location: [],
