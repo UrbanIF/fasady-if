@@ -1,5 +1,3 @@
-log = (a)-> console.log(a)
-
 $ ->
   class Fasady
     mainMap: null
@@ -140,6 +138,7 @@ $ ->
         $('#category_select').append "<option value='#{category.id}'>#{category.name}</option>"
       $('#categories').append "<div class='marker-desc'><div class='marker yellow'></div><div class='desc'>Усе</div></div>"
 
+#      todo коли клікати по лівій панелі, то мають заповнюватися дані об’єкта
     fillLeftPanelBuildingsList: ->
       arrToHash = (orig) ->
         newObj = {}

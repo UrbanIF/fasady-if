@@ -5,8 +5,10 @@ class User
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable,
+         #:registerable,
+         #:recoverable,
+         :rememberable, :trackable, :validatable
 
   ## Database authenticatable
   field :email,              :type => String, :default => ""
@@ -50,9 +52,11 @@ class User
 
   has_many :map_objects
   accepts_nested_attributes_for :map_objects
-  #has_many :photos
 
-
+  embeds_one :facebook, class_name: 'User::Facebook'
+  embeds_one :twitter, class_name: 'User::Twitter'
+  embeds_one :google, class_name: 'User::Google'
+  accepts_nested_attributes_for :facebook, :twitter, :google
 
 
 end
