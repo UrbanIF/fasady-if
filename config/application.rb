@@ -32,6 +32,11 @@ module FasadyIf
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
+    config.twitter_consumer_key = '0Qzhm7ZLBO5RkGIk6Wqqnw'
+    config.twitter_consumer_secret = 'gSKR0lmKmpxPBWebUzyF6LQWRTGUOR1dSash1bVgo'
+
+    config.facebook_consumer_key = 316650425140795
+    config.facebook_consumer_secret = '3f12a32f4bc4bb51516d466af880e97f'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]

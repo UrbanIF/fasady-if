@@ -1,5 +1,3 @@
-log = (a)-> console.log(a)
-
 $ ->
   class Fasady
     mainMap: null

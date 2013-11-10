@@ -35,6 +35,8 @@ gem 'coffee-rails', '~> 4.0.0'
 #gem 'omniauth-facebook'
 #gem 'omniauth-twitter'
 #gem "omniauth-google-oauth2"
+gem 'twitter_oauth'
+
 
 group :development do
   gem 'better_errors'

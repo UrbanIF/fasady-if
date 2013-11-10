@@ -56,6 +56,53 @@ h1, h2, h3, h4, h5, h6{
 }
 
 
+// INPUTS begin
+
+.input_block_default{
+    width: 362px;
+    height: 61px;
+    @include border-radius(3px);
+
+    padding: 10px 20px;
+    line-height: 40px;
+
+    font-weight: 500px;
+    cursor: pointer;
+}
+
+.input_btn_default{
+    @extend .input_block_default;
+
+    color: #fff;
+}
+
+.btn_social{
+    @extend .input_btn_default;
+    padding: 10px 42px;
+    font-weight: 300px;
+    margin-bottom: 20px;
+
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+.btn_social_facebook{
+    @extend .btn_social;
+    background-color: #5d82d1;
+    background-image: inline-image("social-icons/facebook.png");
+}
+.btn_social_twitter{
+    @extend .btn_social;
+    background-color: #40bff5;
+    background-image: inline-image("social-icons/twitter.png");
+}
+.btn_social_gplus{
+    @extend .btn_social;
+    background-color: #eb5e4c;
+    background-image: inline-image("social-icons/gplus.png");
+}
+// INPUTS end
+
 
 .left_panel{
     width: 450px;
@@ -76,7 +123,7 @@ h1, h2, h3, h4, h5, h6{
     }
         .site_title{
             font-size: 36px;
-            margin: 0;
+            margin: 0 0 11px 0;
             font-weight: 300;
         }
         .question_sign{
@@ -92,6 +139,15 @@ h1, h2, h3, h4, h5, h6{
             margin-top: 12px;
             cursor: pointer;
         }
+        .auth-block{
+        }
+            #login{
+                font-size: 12px;
+                border: none;
+                background: none;
+                margin: 0;
+                padding: 0;
+            }
         .sorting_label{
             font-weight: 700;
             position: absolute;
@@ -432,86 +488,6 @@ h1, h2, h3, h4, h5, h6{
 
 
 
-
-//#add_object_popup{
-//    .popup{
-//        width: 893px;
-//        height: 826px;
-//        height: 630px;
-//    }
-//
-//    .popup_input{
-//        width: 362px;
-//        background: #ebebeb;
-//        padding: 10px 18px;
-//        @include border-radius(3px);
-//    }
-//    .margin-right{
-//        margin-right: 64px;
-//    }
-//
-//    .popup_select{
-//        float: right;
-//        width: 362px;
-//    }
-//
-//    .popup_top_fields-label{
-//        display: block;
-//        font-size: 14px;
-//        padding: 7px 18px 16px;
-//    }
-//
-//    .popup_search_container{
-//        position: absolute;
-//        top: 210px;
-//        z-index: 99999;
-//    }
-//        .search{
-//            width: 362px;
-//        }
-//
-//
-//    .popup_add_files{
-//        margin: 20px 0 10px;
-//    }
-//        .btn{
-//            @extend .popup_input;
-//            background: $blue;
-//            line-height: 40px;
-//            color: #fff;
-//            cursor: pointer;
-//        }
-//        .btn-short{
-//            width: 162px;
-//
-//        }
-//
-//            .add-image{
-//                display: inline-block;
-//
-//                padding-right: 30px;
-//                background-image: inline-image("add-file.png");
-//                background-repeat: no-repeat;
-//                background-position: right center;
-//
-//
-//            }
-//    .popup_comment{
-//        width: 100%;
-//        margin-bottom: 20px;
-//    }
-//
-//    .save_object{
-//        padding-right: 30px;
-//        background-image: inline-image("plus.png");
-//        background-repeat: no-repeat;
-//        background-position: right center;
-//        float: right;
-//    }
-//}
-
-
-
 #add_object_map{
     height: 180px;
     width: 893px;
@@ -570,7 +546,6 @@ h1, h2, h3, h4, h5, h6{
     }
     .btn-short{
         width: 162px;
-
     }
 
     .add-image{
@@ -654,3 +629,10 @@ h1, h2, h3, h4, h5, h6{
         }
 }
 
+
+#login-popup{
+    .popup{
+        width: 467px;
+        height: 355px;
+    }
+}
