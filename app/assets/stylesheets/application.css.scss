@@ -315,9 +315,11 @@ h1, h2, h3, h4, h5, h6{
                     width:72px;
                     border:none;
                     padding:0;
+                    display:inline-block;
                     position:relative;
-                    top: -7px;
+                    top: -1px;
                     left: -10px;
+                    clear: both;
                     // padding-right: 80px;
                     background-image: inline-image("search.png");
                 }
@@ -528,6 +530,11 @@ h1, h2, h3, h4, h5, h6{
         position: absolute;
         top: 210px;
         z-index: 99999;
+        width:500px;
+        height:62px;
+    }
+    #popup_search {
+        float:left;
     }
     .search{
         width: 362px;
