@@ -12,27 +12,31 @@ class ObjectForm
     $('.search_button').on 'click', @geocode
     $('.add-image_input').on 'change', @fileSelected
     $('#add_object'). on 'click', @showForm
+    $(window).on 'geocoded', =>
+      console.log('geocoded')
+      $('#popup_search').data('geocoded', 'geocoded')
+      @validateForm()
+      $('.popup_search_container .search_button').addClass('geocoded')
 
     # @initAutocomplete()
 
   submit: (e)=>
     e.preventDefault()
-    # fd = new FormData()
-    # fd.append('map_object[before_photos_attributes][0][link]', $('.add-image_input')[0].files)
-    # fd.append('map_object[after_photos_attributes][0][link]', $('.add-image_input')[1].files)
-    xhr = $.ajax
-      type: "POST"
-      url: @form.prop('action')
-      data: new FormData(@form[0])
-      cache: false
-      contentType: false
-      processData: false
+    console.log @validateForm()
+    if @validateForm()
+      xhr = $.ajax
+        type: "POST"
+        url: @form.prop('action')
+        data: new FormData(@form[0])
+        cache: false
+        contentType: false
+        processData: false
 
-    xhr.done =>
-      @popup.removeClass('active')
-      $('#addition_success-popup').addClass('active')
-    xhr.fail =>
-    xhr.always =>
+      xhr.done =>
+        @popup.removeClass('active')
+        $('#addition_success-popup').addClass('active')
+      xhr.fail =>
+      xhr.always =>
 
   showForm: =>
     @popup.addClass('active')
@@ -73,20 +77,42 @@ class ObjectForm
       address: "#{@searchInput.val()}, Івано-Франнківськ"
       callback: (results, status) =>
         if status is "OK"
+          $(window).trigger('geocoded')
           latlng = results[0].geometry.location
           @moveMarker latlng
           @popupMap.setZoom 17
           @popupMap.set 'minZoom', 17
           @popupMap.set 'maxZoom', 17
 
-  # initAutocomplete: ->
-  #   location = new google.maps.LatLng(48.9260402, 24.74123899999995)
-  #   defaultBounds = new google.maps.LatLngBounds(location)
-  #   options =
-  #     bounds: defaultBounds
-  #     types: ["geocode"]
+  validateForm: ->
+    a1 = @checkValue('#map_object_name')
+    a2 = @checkValue('#category_select', '#dk_container_category_select')
+    a3 = @checkValue('#popup_search')
+    a4 = @checkValue('.add-image_input.left', '.btn.add-image.left')
+    a5 = @checkValue('.add-image_input.right', '.btn.add-image.right')
+    a6 = @checkValue('.popup_input.popup_comment')
+    a7 = @checkAdress()
+    a1 and a2 and a3 and a4 and a5 and a6 and a7
 
-  #   @autocomplete = new google.maps.places.Autocomplete($("#popup_search")[0], options)
+  checkAdress: ->
+    if not $('#popup_search').data('geocoded')?
+      @message 'неправильна адреса'
+      false
+    else
+      true
+  message: (message) ->
+    console.log message
+    alert(message)
+
+  checkValue:(item, class_item) ->
+    class_item = item if not class_item?
+    $class_item = $("#{class_item}")
+    $item = $("#{item}")
+    $class_item.removeClass('empty')
+    $class_item.addClass('empty') if not $item.val()
+    # $("#{class_item}").one 'blur', @checkValue(item, class_item)
+
+    !!$item.val()
 
 $ ->
   window.objectForm = new ObjectForm()
