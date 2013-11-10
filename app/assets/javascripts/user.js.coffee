@@ -5,6 +5,16 @@ class UserLogic
       $('#login-popup').addClass('active')
 
 
+    $.ajax
+      url: '/api/user'
+      type: 'get'
+    .done (json)->
+      $('#login').hide()
+      $('#show-profile').html(json.name).show()
+    .fail ->
+      log 'not auth'
+    #            json.twitter.user_name, json.twitter.user_link
+
 
     OAuth.initialize('fxI7BSLMHlXJcXcq71qRpe6_O70')
 
@@ -23,8 +33,15 @@ class UserLogic
             twitter:
               oauth_token: result.oauth_token
               oauth_token_secret: result.oauth_token_secret
-          done: (json)->
-            log json
+        .done (json)->
+          $('#login').hide()
+          $('#show-profile').html(json.name).show()
+#            json.twitter.user_name, json.twitter.user_link
+
+          $('#login-popup').removeClass('active')
+          log json
+        .fail (json)->
+          alert 'FAIL'
 
 
 

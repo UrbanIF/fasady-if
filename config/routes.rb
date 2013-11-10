@@ -10,6 +10,8 @@ FasadyIf::Application.routes.draw do
         get 'categories', to: :categories
       end
     end
+
+    get 'user', to: "user#index"
   end
 
   root :to => "home#index"

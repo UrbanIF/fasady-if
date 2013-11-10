@@ -7,6 +7,6 @@ class User::Twitter
 
   field :user_name
   field :user_link
-  field :user_id
+  field :uid
 
 end

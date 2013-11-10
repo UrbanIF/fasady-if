@@ -144,13 +144,15 @@ h1, h2, h3, h4, h5, h6{
         }
         .auth-block{
         }
-            #login{
+            #login, #show-profile{
                 font-size: 12px;
                 border: none;
                 background: none;
                 margin: 0;
                 padding: 0;
             }
+            #show-profile{display: none;}
+
         .sorting_label{
             font-weight: 700;
             position: absolute;
