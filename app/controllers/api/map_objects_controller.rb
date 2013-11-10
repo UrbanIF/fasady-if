@@ -31,12 +31,11 @@ class Api::MapObjectsController < ApplicationController
 
   protected
     def map_object_params
-      params.require(:map_object).permit(:name,  :category_id, :description,
+      params.require(:map_object).permit(:name,  :category_id, :description, :before_photo, :after_photo,
                                    location: [],
                                    address:    [:prefix, :street, :building_number, :modifier],
 
-                                   before_photos_attributes: [:link],
-                                   after_photos_attributes:  [:link]
+
                                    #{ before_photos: :link },
                                    #{ after_photos: :link }
       )

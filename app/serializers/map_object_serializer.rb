@@ -1,8 +1,9 @@
 class MapObjectSerializer < ActiveModel::Serializer
-  attributes :id, :name, :location, :description, :value, :tokens, :category, :color, :letter
+  attributes :id, :name, :location, :description, :value, :tokens, :category, :color, :letter,
+  :before_photo, :after_photo
   has_one  :address
 
-  has_many  :before_photos, :after_photos
+  has_many
 
   def id
     object.id.to_s
@@ -18,6 +19,13 @@ class MapObjectSerializer < ActiveModel::Serializer
 
   def letter
     object.address.street[0] if object.address
+  end
+
+  def before_photo
+    object.before_photo.url
+  end
+  def after_photo
+    object.after_photo.url
   end
 
   #for twitter typehead
