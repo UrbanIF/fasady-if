@@ -25,7 +25,7 @@ $ ->
           @map_object_json = response
 
           @createMapMarkersOnMainMap(@map_object_json)
-          @fillLeftPanelBuildingsList()
+          @fillLeftPanelBuildingsList(@map_object_json)
           @initSearchField()
 
     _clicksHandling: ->
@@ -46,37 +46,28 @@ $ ->
         self.mainMap.setZoom(18)
 
       $(document).on 'click', '.marker-desc', ->
-        categoryName = $(this).find('.desc').html()
+        $this = $(this)
+        if $this.hasClass('filter-reset')
+          $('.marker-desc').removeClass('disactive')
+        else
+          $(".marker-desc:not('.filter-reset')").addClass('disactive')
+          $this.removeClass('disactive')
+        categoryName = $this.find('.desc').html()
         self._filterObjectsByCategory(categoryName)
+
+
+
+
 
       $(document).on 'click', '#map_object_close', =>
         @_closeObjectDescription()
 
-#      google.maps.event.addListener marker, 'mouseover', ((map)=>
-#        ()->
-#          infowindow.open(map, @)
-#      )(@mainMap.map)
-    #   $(document).on 'click', '#submit_object', =>
-    #     $.ajax
-    #       method: 'POST'
-    #       url: '/api/map_objects.json'
-    #       data:
-    #         map_object:
-    #           name:          $('#map_object_name').val()
-    #           category_id:   $('#category_select').val()
-    #           location:      [ @popupMap.markers[0].position.lb, @popupMap.markers[0].position.mb ]
-    #           address:
-    #             prefix: 'вул.'
-    #             street: 'Маланюка'
-    #             building_number: 10
-    #             modifier: ''
-
-    # #          before_photos: [ {link: 'test' }]
-    # #          after_photos:  [ {link: 'test' }]
-
-    #     .done ()->
-    #
-    #     .fail()
+      $('#map-object_image-button').on 'click', ->
+        $('.map-object_image').toggleClass('alfa-zero')
+        $('#map-object_image-button').text if $('#map-object_image-button').text() == 'Фото існуючого стану'
+          'Проектна пропозиція'
+        else
+          'Фото існуючого стану'
 
     createMapMarkersOnMainMap: (map_objects)->
       self = @
@@ -88,17 +79,30 @@ $ ->
           title: map_object.name
           icon: "/assets/marker-#{map_object.color}.png"
           infoWindow:
-            content: "<p>#{map_object.name}</p>"
+            content: "<img width='235' src='#{map_object.before_photo}'><p>#{map_object.name}</p>"
           click:
             ((map_object)=>
               (e)=>
-
-                # fill map_object
                 $('#map_object_title').text(map_object.name)
                 $('#map_object_address').text "#{ map_object.address.prefix } #{ map_object.address.street }, #{ map_object.address.building_number }#{ map_object.address.modifier }"
+                $('#map_object_author_name').text map_object.user.name
+                $('#map_object_author_avatar').prop('src', map_object.user.avatar)
+                $('#map-object_image-before').prop('src', map_object.before_photo)
+                $('#map-object_image-after').prop('src', map_object.after_photo)
+
                 @_openObjectDescription(e.position)
 
             )(map_object)
+
+#google.maps.event.addListener(marker, 'mouseover', function() {
+#  infowindow.open(map, this);
+#});
+#
+#// assuming you also want to hide the infowindow when user mouses-out
+#google.maps.event.addListener(marker, 'mouseout', function() {
+#  infowindow.close();
+#});
+
       @mainMap.addMarkers(markers)
 
 
@@ -136,10 +140,10 @@ $ ->
       for category in @categories_json
         $('#categories').append "<div class='marker-desc'><div class='marker #{category.color}'></div><div class='desc'>#{category.name}</div></div>"
         $('#category_select').append "<option value='#{category.id}'>#{category.name}</option>"
-      $('#categories').append "<div class='marker-desc'><div class='marker yellow'></div><div class='desc'>Усе</div></div>"
+      $('#categories').append "<div class='marker-desc filter-reset'><div class='marker all'></div><div class='desc'>Усе</div></div>"
 
 #      todo коли клікати по лівій панелі, то мають заповнюватися дані об’єкта
-    fillLeftPanelBuildingsList: ->
+    fillLeftPanelBuildingsList: (map_object_json)->
       arrToHash = (orig) ->
         newObj = {}
         i = 0
@@ -155,14 +159,15 @@ $ ->
           i++
         newObj
 
-      hash = arrToHash(@map_object_json)
+      hash = arrToHash(map_object_json)
 
+      all = ''
       for letter, buildings of hash
-        lis = ''
+        objects_by_letter = ''
         for b in buildings
-          lis += "<li data-lat='#{b.location[0]}' data-lng='#{b.location[1]}' class='object_name'>#{ b.address.street }, #{ b.address.building_number }</li>"
-        $('#letters_list').append "<li class='objects_block'><div class='letter'>#{letter}</div><ul class='letter_objects'>#{lis}</ul></li>"
-
+          objects_by_letter += "<li data-lat='#{b.location[0]}' data-lng='#{b.location[1]}' class='object_name'>#{ b.address.street }, #{ b.address.building_number }</li>"
+        all += "<li class='objects_block'><div class='letter'>#{letter}</div><ul class='letter_objects'>#{objects_by_letter}</ul></li>"
+      $('#letters_list').html all
     _filterObjectsByCategory: (categoryName) =>
       @mainMap.removeMarkers()
 #      @mainMap.markerClusterer.clearMarkers()
@@ -171,6 +176,7 @@ $ ->
         objectsFiltered = @map_object_json
       else
         objectsFiltered = (object for object in @map_object_json when object.category == categoryName)
+      @fillLeftPanelBuildingsList(objectsFiltered)
       @createMapMarkersOnMainMap(objectsFiltered)
 
     initSearchField: ->

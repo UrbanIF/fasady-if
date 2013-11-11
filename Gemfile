@@ -36,6 +36,7 @@ gem 'coffee-rails', '~> 4.0.0'
 #gem 'omniauth-twitter'
 #gem "omniauth-google-oauth2"
 gem 'twitter_oauth'
+gem 'fb_graph'
 
 
 group :development do
@@ -49,6 +50,8 @@ group :development do
   gem 'rb-fchange', :require=>false
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false
+  gem 'pry'
+  gem 'pry-rails'
 end
 group :development, :test do
   gem 'factory_girl_rails'

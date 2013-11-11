@@ -44,14 +44,17 @@
       #map_object_close x
       %header.map-object_header
         .map-object_author
-          .map-object_author_avatar#map_object_author_avatar
+          %img.map-object_author_avatar#map_object_author_avatar
           .map-object_author_name#map_object_author_name Андрій Назаренко
           .map-object_author_desc автор проекту
         %h2.map-object_title#map_object_title
         %h3.map-object_address#map_object_address
 
       .map-object_photo-section
-        %img.map-object_image{src: 'assets/fasad.jpg'}
+        .map-object_image-container
+          %button#map-object_image-button.map-object_image-button Фото існуючого стану
+          %img#map-object_image-before.map-object_image{src: 'assets/fasad.jpg'}
+          %img#map-object_image-after.map-object_image.alfa-zero{src: 'assets/fasad.jpg'}
         .map-object_left-panel
           .map-object_button
           .map-object_description

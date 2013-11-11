@@ -75,7 +75,7 @@ h1, h2, h3, h4, h5, h6{
 
 .input_btn_default{
     @extend .input_block_default;
-
+    border: none;
     color: #fff;
 }
 
@@ -246,7 +246,12 @@ h1, h2, h3, h4, h5, h6{
                 &.yellow  { background: image-url('small-marker-yellow.png'); }
                 &.blue    { background: image-url('small-marker-blue.png');   }
                 &.purple  { background: image-url('small-marker-purple.png'); }
-
+                &.all     { background: image-url('small-marker-all.png'); }
+            }
+            &.disactive{
+                .marker{
+                    background: image-url('small-marker-disactive.png') !important;
+                }
             }
             .desc{
                 font-size: 12px;
@@ -413,10 +418,33 @@ h1, h2, h3, h4, h5, h6{
                 padding: 15px 0 55px;
                 text-align: center;
             }
-                .map-object_image{
-                    max-height: 100%;
-                    width: auto;
+                .map-object_image-container{
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
                 }
+                    .map-object_image{
+                        position: absolute;
+                        left: 0;
+                        right: 0;
+                        margin: auto;
+                        height: 100%;
+                        width: auto;
+                        @include transition(all 0.5s);
+                    }
+                    .alfa-zero{
+                        @include opacity(0);
+                    }
+                .map-object_image-button{
+                    @extend .input_btn_default;
+                    background-color: #4d8ffd;
+                    position: absolute;
+                    left: 40px;
+                    top: 40px;
+                    width: 245px;
+                    z-index: 99;
+                }
+
                 .map-object_left-panel{}
                     .map-object_button{}
                     .map-object_description{}
@@ -645,6 +673,13 @@ h1, h2, h3, h4, h5, h6{
 #login-popup{
     .popup{
         width: 467px;
-        height: 355px;
+        //height: 355px;
+        height: 275px;
     }
+}
+
+.gm-style .gm-style-iw div{
+    font-size: 18px;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
 }

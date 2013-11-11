@@ -1,7 +1,7 @@
 class MapObjectSerializer < ActiveModel::Serializer
   attributes :id, :name, :location, :description, :value, :tokens, :category, :color, :letter,
   :before_photo, :after_photo
-  has_one  :address
+  has_one  :address, :user
 
   has_many
 
