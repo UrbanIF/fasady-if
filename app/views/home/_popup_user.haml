@@ -3,6 +3,47 @@
   .popup
     .popup_inner
       %h2.popup_title Вхід через соціальні мережі
-      #login-facebook.btn_social_facebook Увійти через фейсбук
-      #login-twitter.btn_social_twitter Увійти через твітер
-      / #login-gplus.btn_social_gplus Увійти через гугл
+      .facebook_login_action.btn_social_facebook Увійти через фейсбук
+      .twitter_login_action.btn_social_twitter Увійти через твітер
+      / .gplus_login_action.btn_social_gplus Увійти через гугл
+
+#profile-popup.popup_container
+  .popup_bg
+  .popup
+    .popup_inner
+      %header
+        %img.profile-popup_author_avatar#profile-popup_author_avatar
+        .profile-popup_author_name#profile-popup_author_name Андрій Назаренко
+
+        %h2.popup_title.profile-popup_title Профайл
+
+      %hr.profile-popup_line
+
+      %section.clearfix
+        .profile-popup_connected_accounts
+          %h3.popup_title.profile-popup_title_small
+            Підключені акаунти
+
+          .social_account.clearfix.social_account_facebook
+            %a.btn_social_facebook.btn_social_mini.social_account_icon{target: '_blank'}
+            %a.social_account_username.facebook_username{target: '_blank'} None
+          .social_account.clearfix.social_account_twitter
+            %a.btn_social_twitter.btn_social_mini.social_account_icon{target: '_blank'}
+            %a.social_account_username.twitter_username{target: '_blank'} None
+
+        .profile-popup_connect_accounts
+          %h3.popup_title.profile-popup_title_small
+            Підключити інші акаунти до профайлу
+          .facebook_login_action.btn_social_facebook Увійти через фейсбук
+          .twitter_login_action.btn_social_twitter Увійти через твітер
+
+      %hr.profile-popup_line
+
+      %section
+        %h3.popup_title.profile-popup_title_small
+          Додані об’єкти
+        %ol.user_objects
+          %li Ресторан “Гуцулик”, вул. Паркова, 21
+          %li Ресторан “Гуцулик”, вул. Паркова, 21
+      %hr.profile-popup_line
+

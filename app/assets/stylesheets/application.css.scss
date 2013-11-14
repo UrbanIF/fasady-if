@@ -104,6 +104,12 @@ h1, h2, h3, h4, h5, h6{
     background-color: #eb5e4c;
     background-image: inline-image("social-icons/gplus.png");
 }
+
+.btn_social_mini{
+    width: 61px;
+    padding: 0;
+    margin: 0 17px 0 0;
+}
 // INPUTS end
 
 
@@ -678,6 +684,103 @@ h1, h2, h3, h4, h5, h6{
     }
 }
 
+
+#profile-popup{
+    .popup{
+        width: 932px;
+        height: 740px;
+    }
+}
+    //header
+    .profile-popup_author_name{
+        line-height: 50px;
+        float: right;
+    }
+    .profile-popup_author_avatar{
+        width: 50px;
+        height: 50px;
+        float: right;
+        margin-left: 10px;
+    }
+    .profile-popup_title{
+        line-height: 50px;
+        margin-bottom: 15px;
+    }
+    .profile-popup_line{
+        margin: 0 0 25px 0;
+    }
+
+    //accounts
+    .profile-popup_connected_accounts{
+        //width: 474px;
+        float: left;
+    }
+        .profile-popup_title_small{
+            margin-bottom: 12px;
+        }
+
+        .social_account{
+            margin: 0 0 20px 0;
+            width: 410px;
+        }
+            .social_account_icon{
+                float: left;
+            }
+            .social_account_username{
+                font-weight: 500;
+                margin: 0;
+                color: $dark;
+                text-decoration: none;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+
+
+    .profile-popup_connect_accounts{
+        //width: 474px;
+        float: right;
+    }
+
+
+ol{
+    counter-reset:li; /* Initiate a counter */
+    margin:0;
+    padding: 2px 0 0;
+}
+ol > li {
+    position:relative; /* Create a positioning context */
+    margin:0 0 30px 2em; /* Give each list item a left margin to make room for the numbers */
+    padding:3px 8px; /* Add some spacing around the content */
+    list-style:none; /* Disable the normal item numbering */
+}
+ol > li:before {
+    content:counter(li); /* Use the counter as content */
+    counter-increment:li; /* Increment the counter by 1 */
+    /* Position and style the number */
+    position:absolute;
+    top:-2px;
+    left:-2em;
+    font-size:15px;
+    @include box-sizing(border-box);
+    @include border-radius(3px);
+    width:2em;
+    /* Some space between the number and the content in browsers that support
+       generated content but not positioning it (Camino 2 is one example) */
+    margin-right:8px;
+    padding:4px;
+    color:#fff;
+    background: $blue;
+    font-weight:bold;
+    text-align:center;
+}
+ol > li:hover:before {
+    color: #ffff00;
+}
+
+
+
+// map infoWindow
 .gm-style .gm-style-iw div{
     font-size: 18px;
     font-weight: 300;

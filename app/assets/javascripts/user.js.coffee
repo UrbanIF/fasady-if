@@ -1,9 +1,13 @@
-class UserLogic
+class User
   user: null
 
   constructor: ->
     $('#login').on 'click', ->
       $('#login-popup').addClass('active')
+
+    $('#show-profile').on 'click', ->
+      $('#profile-popup').addClass('active')
+
 
 
     $.ajax
@@ -12,13 +16,11 @@ class UserLogic
     .done(@fillUserData)
     .fail ->
       log 'not auth'
-    #            json.twitter.user_name, json.twitter.user_link
 
 
     OAuth.initialize('fxI7BSLMHlXJcXcq71qRpe6_O70')
 
-
-    $('#login-facebook').on 'click', =>
+    $('.facebook_login_action').on 'click', =>
       OAuth.popup 'facebook', (error, result) =>
         log result
         $.ajax
@@ -30,9 +32,7 @@ class UserLogic
         .done(@fillUserData)
         .fail(@loginFail)
 
-#        access_token
-
-    $('#login-twitter').on 'click', =>
+    $('.twitter_login_action').on 'click', =>
       OAuth.popup 'twitter', (error, result) =>
         $.ajax
           url: '/login_with_socials/twitter'
@@ -43,23 +43,53 @@ class UserLogic
         .done(@fillUserData)
         .fail(@loginFail)
 
-
-
-    $('#login-gplus').on 'click', =>
-      OAuth.popup 'google', (error, result) =>
-        log result
+#    $('gplus_login_action').on 'click', =>
+#      OAuth.popup 'google', (error, result) =>
+#        log result
 
   fillUserData: (json)=>
     @user = json
+
     $('#login').hide()
-    $('#show-profile').html(json.name).show()
-#    json.twitter.user_name, json.twitter.user_link
+    $('#show-profile, #profile-popup_author_name').html(json.name)
+    $('#show-profile').show()
+
+    $('#profile-popup_author_avatar').prop('src', json.avatar)
+
+    if json.facebook
+      $('.facebook_login_action').hide()
+      $('.social_account_facebook').show()
+      $('.btn_social_facebook.btn_social_mini, .facebook_username').prop('href', json.facebook.user_link)
+      $('.facebook_username').html(json.facebook.user_name)
+    else
+      $('.facebook_login_action').show()
+      $('.social_account_facebook').hide()
+
+    if json.twitter
+      $('.twitter_login_action').hide()
+      $('.social_account_twitter').show()
+      $('.btn_social_twitter.btn_social_mini, .twitter_username').prop('href', json.twitter.user_link)
+      $('.twitter_username').html(json.twitter.user_name)
+    else
+      $('.twitter_login_action').show()
+      $('.social_account_twitter').hide()
+
+    if json.twitter and json.facebook
+      $('.profile-popup_connect_accounts').hide()
+    else
+      $('.profile-popup_connect_accounts').show()
+
+    unless json.twitter and json.facebook
+      $('.profile-popup_connected_accounts').hide()
+    else
+      $('.profile-popup_connected_accounts').show()
+
+
     $('#login-popup').removeClass('active')
-    log json
 
   loginFail: ->
     alert 'fail'
 
 
 $ ->
-  window.UserLogic = new UserLogic()
+  window.user = new User()
