@@ -6,7 +6,7 @@
       %meta{:content => content_for?(:description) ? yield(:description) : "Fasady If", :name => "description"}
         %link{rel: 'stylesheet', href: 'http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=latin,cyrillic'}
         = stylesheet_link_tag "application", :media => "all"
-        = javascript_include_tag "https://maps.google.com/maps/api/js?sensor=true"
+        = javascript_include_tag "https://maps.google.com/maps/api/js?sensor=true&language=uk"
         = javascript_include_tag "application"
         = csrf_meta_tags
         = yield(:head)

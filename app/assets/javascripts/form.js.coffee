@@ -12,10 +12,19 @@ class ObjectForm
     $('.search_button').on 'click', @geocode
     $('.add-image_input').on 'change', @fileSelected
     $('#add_object'). on 'click', @showForm
-    $(window).on 'geocoded', =>
+    $(window).on 'geocoded', (e, data)->
       console.log('geocoded')
+      console.log(data)
+      console.log data['route']
+      $('.street').val data['street_number']
+      $('.route').val data['route']
+
+    $(window).on 'geocoding_error', ->
+      $('.street').val ''
+      $('.route').val ''
+
       $('#popup_search').data('geocoded', 'geocoded')
-      @validateForm()
+      # @validateForm()
       $('.popup_search_container .search_button').addClass('geocoded')
 
     # @initAutocomplete()
@@ -77,12 +86,20 @@ class ObjectForm
       address: "#{@searchInput.val()}, Івано-Франнківськ"
       callback: (results, status) =>
         if status is "OK"
-          $(window).trigger('geocoded')
+          console.log results[0].address_components
+          for component in results[0].address_components
+            street_number = component.short_name if 'street_number' in component.types
+            route = component.short_name if 'route' in component.types
+          console.log street_number
+
+          $(window).trigger('geocoded', [{street_number: street_number, route: route}])
           latlng = results[0].geometry.location
           @moveMarker latlng
           @popupMap.setZoom 17
           @popupMap.set 'minZoom', 17
           @popupMap.set 'maxZoom', 17
+        else
+          $(window).trigger('geocoding_error')
 
   validateForm: ->
     a1 = @checkValue('#map_object_name')
@@ -91,8 +108,7 @@ class ObjectForm
     a4 = @checkValue('.add-image_input.left', '.btn.add-image.left')
     a5 = @checkValue('.add-image_input.right', '.btn.add-image.right')
     a6 = @checkValue('.popup_input.popup_comment')
-    a7 = @checkAdress()
-    a1 and a2 and a3 and a4 and a5 and a6 and a7
+    a1 and a2 and a3 and a4 and a5 and a6 and @checkAdress()
 
   checkAdress: ->
     if not $('#popup_search').data('geocoded')?
