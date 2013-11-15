@@ -16,16 +16,25 @@ class ObjectForm
       console.log('geocoded')
       console.log(data)
       console.log data['route']
-      $('.street').val data['street_number']
-      $('.route').val data['route']
+      adress = ''
+      prefix = ''
+      if data['route']?
+        prefix = (/вулиця/i.exec(data['route']))
+        prefix = prefix[0] if prefix[0]?
+        console.log prefix
+        adress = data['route'].replace /вулиця /i, ''
+      console.log data['street_number']
+      $('.street').val adress
+      $('.route').val data['street_number']
+      $('.prefix').val prefix
+      $('#popup_search').data('geocoded', 'geocoded')
+      # @validateForm()
+      $('.popup_search_container .search_button').addClass('geocoded')
 
     $(window).on 'geocoding_error', ->
       $('.street').val ''
       $('.route').val ''
-
-      $('#popup_search').data('geocoded', 'geocoded')
-      # @validateForm()
-      $('.popup_search_container .search_button').addClass('geocoded')
+      $('.prefix').val ''
 
     # @initAutocomplete()
 

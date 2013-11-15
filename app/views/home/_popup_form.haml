@@ -14,7 +14,7 @@
         #add_object_map
         .popup_search_container
           / todo fix that
-          %input#popup_search{name: 'map_object[address][street]',placeholder: 'Адреса'}
+          %input#popup_search{placeholder: 'Адреса'}
           %button.search_button
         .popup_add_files
           .btn.add-image.margin-right.left>
@@ -27,8 +27,9 @@
             %input.add-image_input.right{name: 'map_object[after_photo]', type: 'file'}
         %input.lat{type:'hidden', name:'map_object[location][]'}
         %input.lng{type:'hidden', name:'map_object[location][]'}
-        %input.street{type:'hidden', name:'map_object[street][]'}
-        %input.route{type:'hidden', name:'map_object[route][]'}
+        %input.street{type:'hidden', name:'map_object[address][street]'}
+        %input.prefix{type:'hidden', name:'map_object[address][prefix]'}
+        %input.route{type:'hidden', name:'map_object[address][building_number]'}
         %input.popup_input.popup_comment{name:'map_object[description]',placeholder: 'Короткий опис'}>
 
         #img-container
