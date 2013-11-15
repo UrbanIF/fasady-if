@@ -35,7 +35,7 @@ $ ->
         $('#about').toggleClass('active')
 
       # HIDE POPUP
-      $(document).on 'click', '.popup_bg', ->
+      $(document).on 'click', '.popup_bg, .popup_close', ->
         $(this).parents( '.popup_container' ).removeClass('active')
 
       # GO TO MARKER IF CLICK ON LEFT PANEL
