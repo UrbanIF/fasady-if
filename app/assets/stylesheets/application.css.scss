@@ -569,7 +569,7 @@ h1, h2, h3, h4, h5, h6{
         position: absolute;
         top: 210px;
         z-index: 99999;
-        width:500px;
+        width:355px;
         height:62px;
     }
     #popup_search {
@@ -672,6 +672,7 @@ h1, h2, h3, h4, h5, h6{
             background-image: inline-image("icon-success.png");
             background-repeat: no-repeat;
             background-position: center center;
+            cursor: pointer;
         }
 }
 

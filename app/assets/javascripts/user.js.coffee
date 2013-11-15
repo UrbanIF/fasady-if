@@ -79,7 +79,7 @@ class User
     else
       $('.profile-popup_connect_accounts').show()
 
-    unless json.twitter and json.facebook
+    if !json.twitter and !json.facebook
       $('.profile-popup_connected_accounts').hide()
     else
       $('.profile-popup_connected_accounts').show()
