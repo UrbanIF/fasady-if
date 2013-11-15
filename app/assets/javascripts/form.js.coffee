@@ -13,17 +13,12 @@ class ObjectForm
     $('.add-image_input').on 'change', @fileSelected
     $('#add_object'). on 'click', @showForm
     $(window).on 'geocoded', (e, data)->
-      console.log('geocoded')
-      console.log(data)
-      console.log data['route']
       adress = ''
       prefix = ''
       if data['route']?
         prefix = (/вулиця/i.exec(data['route']))
         prefix = prefix[0] if prefix[0]?
-        console.log prefix
         adress = data['route'].replace /вулиця /i, ''
-      console.log data['street_number']
       $('.street').val adress
       $('.route').val data['street_number']
       $('.prefix').val prefix
@@ -32,6 +27,8 @@ class ObjectForm
       $('.popup_search_container .search_button').addClass('geocoded')
 
     $(window).on 'geocoding_error', ->
+      $('#popup_search').removeData('geocoded')
+      $('.popup_search_container .search_button').removeClass('geocoded')
       $('.street').val ''
       $('.route').val ''
       $('.prefix').val ''
@@ -95,11 +92,9 @@ class ObjectForm
       address: "#{@searchInput.val()}, Івано-Франнківськ"
       callback: (results, status) =>
         if status is "OK"
-          console.log results[0].address_components
           for component in results[0].address_components
             street_number = component.short_name if 'street_number' in component.types
             route = component.short_name if 'route' in component.types
-          console.log street_number
 
           $(window).trigger('geocoded', [{street_number: street_number, route: route}])
           latlng = results[0].geometry.location
