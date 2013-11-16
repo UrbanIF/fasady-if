@@ -163,7 +163,7 @@ $ ->
       for letter, buildings of hash
         objects_by_letter = ''
         for b in buildings
-          objects_by_letter += "<li data-map-object='#{ JSON.stringify(b) }' data-lat='#{b.location[0]}' data-lng='#{b.location[1]}' class='object_name'>#{ b.address.street }, #{ b.address.building_number }</li>"
+          objects_by_letter += "<li data-map-object='#{ JSON.stringify(b) }' class='object_name'>#{ b.address.street }, #{ b.address.building_number }</li>"
         all += "<li class='objects_block'><div class='letter'>#{letter}</div><ul class='letter_objects'>#{objects_by_letter}</ul></li>"
       $('#letters_list').html all
     _filterObjectsByCategory: (categoryName) =>
