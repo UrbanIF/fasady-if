@@ -25,7 +25,8 @@ class ObjectForm
       # @validateForm()
       $('.popup_search_container .search_button').addClass('geocoded')
 
-    $(window).on 'geocoding_error', ->
+    $(window).on 'geocoding_error', =>
+      @message 'адресу не знайдено'
       $('#popup_search').removeData('geocoded')
       $('.popup_search_container .search_button').removeClass('geocoded')
       $('.street').val ''
@@ -36,8 +37,9 @@ class ObjectForm
 
   submit: (e)=>
     e.preventDefault()
-    console.log @validateForm()
-    if @validateForm()
+    form_valid = @validateForm()
+    console.log form_valid
+    if form_valid
       xhr = $.ajax
         type: "POST"
         url: @form.prop('action')
@@ -51,14 +53,26 @@ class ObjectForm
         window.fasady.renderAllMapObjects()
 
         @popup.removeClass('active')
+        @resetForm()
         $('#addition_success-popup').addClass('active')
       xhr.fail =>
       xhr.always =>
 
+  resetForm: ->
+    @form.find("input[type=text], input[type=file], textarea").val('')
+    $('.add-image.left i').text('Фото існуючого стану')
+    $('.add-image.right i').text('Проект-пропозиція до об’єкта')
+    $('#category_select option:eq(0)').prop('selected','selected')
+
+    $('#category_select').dropkick 'reset'
+
   showForm: =>
-    @popup.addClass('active')
-    $('#category_select').dropkick()
-    @popupMap = (new Map('#add_object_map')).map
+    if user.loged_in
+      @popup.addClass('active')
+      $('#category_select').dropkick()
+      @popupMap = (new Map('#add_object_map')).map
+    else
+      $('#login').data('showForm', 'showForm').trigger 'click'
     # @popupMap.set 'disableDefaultUI', true
     # GMaps.on "click", @popupMap.map, @processMarker
     # GMaps.on "place_changed", @autocomplete, =>
@@ -117,11 +131,15 @@ class ObjectForm
     a1 and a2 and a3 and a4 and a5 and a6 and @checkAdress()
 
   checkAdress: ->
+    result = true
     if not $('#popup_search').data('geocoded')?
       @message 'неправильна адреса'
-      false
-    else
-      true
+      result = false
+    else if not $('.route').val()
+        @message 'введіть номер будинку'
+        result = false
+    result
+
   message: (message) ->
     console.log message
     alert(message)
