@@ -179,15 +179,16 @@ $ ->
       @fillLeftPanelBuildingsList(objectsFiltered)
       @createMapMarkersOnMainMap(objectsFiltered)
 
+#      todo додати по ховеру показувти попап на маркеті  і пофіксити його вигляд
     initSearchField: ->
-#       todo чосуь після реініціалізації не шукаю по нових даних
+#       todo чосуь після реініціалізації не шукаю по нових даних бо датасет кешується https://github.com/twitter/typeahead.js/blob/master/src/typeahead.js
+#       тому я ініціалізую новий датасет з рандомною назвою, але це фігово, бо всі список датасетів постійно збільшується
+
 #       todo і ще добавити колбек якщо нічого не знайдено
       $('#search').typeahead('destroy')
 
-      log @map_object_json
-
       $('#search').typeahead
-        name: 'streets'
+        name: 'streets' + Math.random()
         local: @map_object_json
         limit: 9
 
