@@ -31,6 +31,10 @@ body{
     font-size: 18px;
     background-color: green;
 }
+input, textarea{
+    -webkit-font-smoothing: antialiased;
+    color: $dark;
+}
 
 * {
     -webkit-box-sizing: border-box;
@@ -39,7 +43,7 @@ body{
 }
 
 
-::-webkit-input-placeholder { color: $dark; font-weight: 300; font-size: 18px; }
+::-webkit-input-placeholder { color: $dark; font-weight: 300; font-size: 18px; -webkit-font-smoothing: antialiased; }
 :-moz-placeholder { color: $dark; font-weight: 300; font-size: 18px; }
 ::-moz-placeholder { color: $dark; font-weight: 300; font-size: 18px; }
 :-ms-input-placeholder { color: $dark; font-weight: 300; font-size: 18px; }
@@ -59,6 +63,9 @@ h1, h2, h3, h4, h5, h6{
 .empty {
     border: 1px solid red;
 }
+
+
+
 // INPUTS begin
 
 .input_block_default{
@@ -70,12 +77,21 @@ h1, h2, h3, h4, h5, h6{
     line-height: 40px;
 
     font-weight: 500px;
-    cursor: pointer;
+    //cursor: pointer;
+    border: none;
+
+    background-repeat: no-repeat;
+    background-position: right center;
+
+    &:focus{
+        outline: none;
+        //@include box-shadow(inset 1px 1px 2px #c9c9c9, 0 0 0 2px #f3e97f);
+    }
 }
 
 .input_btn_default{
     @extend .input_block_default;
-    border: none;
+    cursor: pointer;
     color: #fff;
 }
 
@@ -84,9 +100,6 @@ h1, h2, h3, h4, h5, h6{
     padding: 10px 42px;
     font-weight: 300px;
     margin-bottom: 20px;
-
-    background-repeat: no-repeat;
-    background-position: center right;
 }
 
 .btn_social_facebook{
@@ -111,6 +124,10 @@ h1, h2, h3, h4, h5, h6{
     margin: 0 17px 0 0;
 }
 // INPUTS end
+
+
+
+
 
 
 .left_panel{
@@ -304,50 +321,28 @@ h1, h2, h3, h4, h5, h6{
             left: 469px;
             z-index: 999;
         }
-
             .plate{
-                width: 280px;
-                height: 60px;
-                @include border-radius(3px);
-                color: $dark;
-                font-weight: 500;
-                font-size: 18px;
-                border: none;
-                background: #fff;
-                padding: 10px 10px;
+                @extend .input_block_default;
+                width: 472px;
+                background-color: #fff;
+                padding: 10px 25px;
             }
 
-            input{
+            .search_container input{
                 @extend .plate;
-
-                &:focus{
-                    outline: none;
-                    //@include box-shadow(inset 1px 1px 2px #c9c9c9, 0 0 0 2px #f3e97f);
-                }
-
+                padding-right: 80px;
+                background-image: inline-image("search.png");
             }
-            .search_button{
-                    height:62px;
-                    width:72px;
-                    border:none;
-                    padding:0;
-                    display:inline-block;
-                    position:relative;
-                    top: -1px;
-                    left: -10px;
-                    clear: both;
-                    // padding-right: 80px;
-                    background-image: inline-image("search.png");
-                }
 
-            .tt-suggestion{
+            .search_container .tt-suggestion{
                 @extend .plate;
-                line-height: 42px;
                 margin: 5px 0;
-                p{
-                    margin: 0;
-                }
+                font-weight: 300;
+                p{ margin: 0; }
             }
+
+
+
 
         #add_object{
             @extend .circle;
@@ -378,13 +373,14 @@ h1, h2, h3, h4, h5, h6{
                 float: right;
                 cursor: pointer;
                 display: block;
-                background-color: #4d8ffd;
+                background-color: $blue;
                 color: #fff;
                 width: 21px;
                 height: 21px;
                 text-align: center;
                 line-height: 18px;
                 font-weight: 500;
+                @include border-radius(50%);
             }
             .map-object_header{
 
@@ -527,6 +523,22 @@ h1, h2, h3, h4, h5, h6{
             margin: 0 0 32px 0;
         }
 
+        .popup_input_padding{
+            padding: 10px 18px;
+        }
+
+        .popup_input{
+            @extend .input_block_default;
+            @extend .popup_input_padding;
+            background-color: #ebebeb;
+        }
+        .popup_btn_blue{
+            @extend .input_btn_default;
+            @extend .popup_input_padding;
+            background-color: $blue;
+            color: #fff;
+        }
+
 
 
 #add_object_map{
@@ -544,12 +556,6 @@ h1, h2, h3, h4, h5, h6{
         height: 630px;
     }
 
-    .popup_input{
-        width: 362px;
-        background: #ebebeb;
-        padding: 10px 18px;
-        @include border-radius(3px);
-    }
     .margin-right{
         margin-right: 64px;
     }
@@ -569,51 +575,46 @@ h1, h2, h3, h4, h5, h6{
         position: absolute;
         top: 210px;
         z-index: 99999;
-        width:355px;
-        height:62px;
     }
-    #popup_search {
-        float:left;
-    }
-    .search{
-        width: 362px;
-    }
+        #popup_search {
+            @extend .popup_input;
+            float:left;
+            width: 290px;
+            background: #fff;
+            @include border-radius(3px 0 0 3px);
+        }
+
+        .search_button{
+            @extend .popup_btn_blue;
+            width:72px;
+            padding:0;
+            background-image: inline-image("search.png");
+            @include border-radius(0 3px 3px 0);
+        }
+
 
 
     .popup_add_files{
         margin: 20px 0 10px;
     }
-    .btn{
-        @extend .popup_input;
-        background: $blue;
-        line-height: 40px;
-        color: #fff;
-        cursor: pointer;
-    }
-    .btn-short{
-        width: 162px;
-    }
-
-    .add-image{
-        display: inline-block;
-        padding-right: 30px;
-        background-image: inline-image("add-file.png");
-        background-repeat: no-repeat;
-        background-position: right center;
-        position: relative;
-    }
-        .add-image_input{
-            cursor: pointer;
-            opacity: 0;
-            filter: alpha(opacity=0);
-            -moz-opacity: 0;
-            text-indent: -99px;
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 100%;
+        .add-image{
+            @extend .popup_btn_blue;
+            display: inline-block;
+            background-image: inline-image("add-file.png");
+            position: relative;
         }
+            .add-image_input{
+                cursor: pointer;
+                opacity: 0;
+                filter: alpha(opacity=0);
+                -moz-opacity: 0;
+                text-indent: -99px;
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 100%;
+            }
 
     .popup_comment{
         width: 100%;
@@ -621,10 +622,10 @@ h1, h2, h3, h4, h5, h6{
     }
 
     .save_object{
+        @extend .popup_btn_blue;
+        width: 162px;
         padding-right: 60px;
         background-image: inline-image("plus.png");
-        background-repeat: no-repeat;
-        background-position: right center;
         float: right;
     }
 }
@@ -689,7 +690,8 @@ h1, h2, h3, h4, h5, h6{
 #profile-popup{
     .popup{
         width: 932px;
-        height: 740px;
+        //height: 740px;
+        height: 370px;
     }
 }
     //header

@@ -14,7 +14,7 @@
         #add_object_map
         .popup_search_container
           / todo fix that
-          %input#popup_search{placeholder: 'Адреса'}
+          %input#popup_search{placeholder: 'Адреса'}>
           %button.search_button
         .popup_add_files
           .btn.add-image.margin-right.left>
@@ -31,9 +31,6 @@
         %input.prefix{type:'hidden', name:'map_object[address][prefix]'}
         %input.route{type:'hidden', name:'map_object[address][building_number]'}
         %input.popup_input.popup_comment{name:'map_object[description]',placeholder: 'Короткий опис'}>
-
-        #img-container
-          %ul#img-list
 
         %input.btn.btn-short.save_object.disabled#submit_object{type: 'submit', value: 'Додати'}
 
