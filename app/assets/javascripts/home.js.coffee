@@ -40,9 +40,9 @@ $ ->
 
       # GO TO MARKER IF CLICK ON LEFT PANEL
       $(document).on 'click', '.object_name', ->
-        lat = $(this).data('lat')
-        lng = $(this).data('lng')
-        self.mainMap.setCenter(lat, lng)
+        mapObject = $(@).data('mapObject')
+        self._fillMapObjectDescription mapObject
+        self.mainMap.setCenter(mapObject.location[0], mapObject.location[1])
         self.mainMap.setZoom(18)
 
       $(document).on 'click', '.marker-desc', ->
@@ -83,36 +83,34 @@ $ ->
           click:
             ((map_object)=>
               (e)=>
-                $('#map_object_title').text(map_object.name)
-                $('#map_object_address').text "#{ map_object.address.prefix } #{ map_object.address.street }, #{ map_object.address.building_number }#{ map_object.address.modifier }"
-                $('#map_object_author_name').text map_object.user.name
-                $('#map_object_author_avatar').prop('src', map_object.user.avatar)
-                $('#map-object_image-before').prop('src', map_object.before_photo)
-                $('#map-object_image-after').prop('src', map_object.after_photo)
-
-                @_openObjectDescription(e.position)
-
+                @_fillMapObjectDescription(map_object)
+                @_openObjectDescription(map_object.location[0], map_object.location[1])
             )(map_object)
-
-#google.maps.event.addListener(marker, 'mouseover', function() {
-#  infowindow.open(map, this);
-#});
-#
-#// assuming you also want to hide the infowindow when user mouses-out
-#google.maps.event.addListener(marker, 'mouseout', function() {
-#  infowindow.close();
-#});
-
+      #google.maps.event.addListener(marker, 'mouseover', function() {
+      #  infowindow.open(map, this);
+      #});
+      #
+      #// assuming you also want to hide the infowindow when user mouses-out
+      #google.maps.event.addListener(marker, 'mouseout', function() {
+      #  infowindow.close();
+      #});
       @mainMap.addMarkers(markers)
 
+    _fillMapObjectDescription: (map_object)=>
+      $('#map_object_title').text(map_object.name)
+      $('#map_object_address').text "#{ map_object.address.prefix } #{ map_object.address.street }, #{ map_object.address.building_number }#{ map_object.address.modifier }"
+      $('#map_object_author_name').text map_object.user.name
+      $('#map_object_author_avatar').prop('src', map_object.user.avatar)
+      $('#map-object_image-before').prop('src', map_object.before_photo)
+      $('#map-object_image-after').prop('src', map_object.after_photo)
 
-    _openObjectDescription: (position)=>
+    _openObjectDescription: (lat, lng)=>
       $('.right_container').addClass('show-object')
       i = 0
       interv = setInterval(
         =>
           @mainMap.refresh()
-          @mainMap.setCenter(position.lat(), position.lng())
+          @mainMap.setCenter(lat, lng)
           @mainMap.setZoom(18)
           i = i + 5
           if i > 600
@@ -165,7 +163,7 @@ $ ->
       for letter, buildings of hash
         objects_by_letter = ''
         for b in buildings
-          objects_by_letter += "<li data-lat='#{b.location[0]}' data-lng='#{b.location[1]}' class='object_name'>#{ b.address.street }, #{ b.address.building_number }</li>"
+          objects_by_letter += "<li data-map-object='#{ JSON.stringify(b) }' data-lat='#{b.location[0]}' data-lng='#{b.location[1]}' class='object_name'>#{ b.address.street }, #{ b.address.building_number }</li>"
         all += "<li class='objects_block'><div class='letter'>#{letter}</div><ul class='letter_objects'>#{objects_by_letter}</ul></li>"
       $('#letters_list').html all
     _filterObjectsByCategory: (categoryName) =>
