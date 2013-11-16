@@ -1,5 +1,4 @@
 # todo тільки залогінені можуть додавати об’єкти
-# todo пофіксити верстку в формі пошуку по доданих об’єктах
 class ObjectForm
   constructor: ->
     alert('old browser') if window.formData?
@@ -47,7 +46,10 @@ class ObjectForm
         contentType: false
         processData: false
 
-      xhr.done =>
+      xhr.done (json)=>
+        window.fasady.map_object_json.push json          # add to GLOBAL objects list
+        window.fasady.renderAllMapObjects()
+
         @popup.removeClass('active')
         $('#addition_success-popup').addClass('active')
       xhr.fail =>

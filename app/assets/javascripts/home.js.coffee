@@ -23,10 +23,12 @@ $ ->
         url: '/api/map_objects.json'
         success: (response)=>
           @map_object_json = response
+          @renderAllMapObjects()
 
-          @createMapMarkersOnMainMap(@map_object_json)
-          @fillLeftPanelBuildingsList(@map_object_json)
-          @initSearchField()
+    renderAllMapObjects: ()=>
+      @createMapMarkersOnMainMap(@map_object_json)
+      @fillLeftPanelBuildingsList(@map_object_json)
+      @initSearchField()
 
     _clicksHandling: ->
       self = @
@@ -165,6 +167,7 @@ $ ->
           objects_by_letter += "<li data-map-object='#{ JSON.stringify(b) }' class='object_name'>#{ b.address.street }, #{ b.address.building_number }</li>"
         all += "<li class='objects_block'><div class='letter'>#{letter}</div><ul class='letter_objects'>#{objects_by_letter}</ul></li>"
       $('#letters_list').html all
+
     _filterObjectsByCategory: (categoryName) =>
       @mainMap.removeMarkers()
 #      @mainMap.markerClusterer.clearMarkers()
@@ -177,10 +180,16 @@ $ ->
       @createMapMarkersOnMainMap(objectsFiltered)
 
     initSearchField: ->
+#       todo чосуь після реініціалізації не шукаю по нових даних
+#       todo і ще добавити колбек якщо нічого не знайдено
+      $('#search').typeahead('destroy')
+
+      log @map_object_json
+
       $('#search').typeahead
         name: 'streets'
         local: @map_object_json
-        limit: 10
+        limit: 9
 
       $('#search').on 'typeahead:selected typeahead:autocompleted', (e, datum)=>
         @mainMap.setCenter(datum.location[0], datum.location[1])
