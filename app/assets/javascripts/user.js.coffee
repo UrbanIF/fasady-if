@@ -1,5 +1,6 @@
 class User
   user: null
+  loged_in: false
 
   constructor: ->
     $('#login').on 'click', ->
@@ -49,7 +50,7 @@ class User
 
   fillUserData: (json)=>
     @user = json
-
+    @loged_in = true
     $('#login').hide()
     $('#show-profile, #profile-popup_author_name').html(json.name)
     $('#show-profile').show()
@@ -84,10 +85,11 @@ class User
     else
       $('.profile-popup_connected_accounts').show()
 
-
     $('#login-popup').removeClass('active')
+    $('#add_object').trigger 'click' if $('#login').data('showForm')
 
   loginFail: ->
+    @loged_in = false
     alert 'fail'
 
 

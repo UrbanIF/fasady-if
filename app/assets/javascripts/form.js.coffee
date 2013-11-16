@@ -26,7 +26,8 @@ class ObjectForm
       # @validateForm()
       $('.popup_search_container .search_button').addClass('geocoded')
 
-    $(window).on 'geocoding_error', ->
+    $(window).on 'geocoding_error', =>
+      @message 'адресу не знайдено'
       $('#popup_search').removeData('geocoded')
       $('.popup_search_container .search_button').removeClass('geocoded')
       $('.street').val ''
@@ -50,14 +51,26 @@ class ObjectForm
 
       xhr.done =>
         @popup.removeClass('active')
+        @resetForm()
         $('#addition_success-popup').addClass('active')
       xhr.fail =>
       xhr.always =>
 
+  resetForm: ->
+    @form.find("input[type=text], input[type=file], textarea").val('')
+    $('.add-image.left i').text('Фото існуючого стану')
+    $('.add-image.right i').text('Проект-пропозиція до об’єкта')
+    $('#category_select option:eq(0)').prop('selected','selected')
+
+    $('#category_select').dropkick 'reset'
+
   showForm: =>
-    @popup.addClass('active')
-    $('#category_select').dropkick()
-    @popupMap = (new Map('#add_object_map')).map
+    if user.loged_in
+      @popup.addClass('active')
+      $('#category_select').dropkick()
+      @popupMap = (new Map('#add_object_map')).map
+    else
+      $('#login').data('showForm', 'showForm').trigger 'click'
     # @popupMap.set 'disableDefaultUI', true
     # GMaps.on "click", @popupMap.map, @processMarker
     # GMaps.on "place_changed", @autocomplete, =>
