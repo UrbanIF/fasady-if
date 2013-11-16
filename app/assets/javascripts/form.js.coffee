@@ -37,8 +37,9 @@ class ObjectForm
 
   submit: (e)=>
     e.preventDefault()
-    console.log @validateForm()
-    if @validateForm()
+    form_valid = @validateForm()
+    console.log form_valid
+    if form_valid
       xhr = $.ajax
         type: "POST"
         url: @form.prop('action')
@@ -115,11 +116,15 @@ class ObjectForm
     a1 and a2 and a3 and a4 and a5 and a6 and @checkAdress()
 
   checkAdress: ->
+    result = true
     if not $('#popup_search').data('geocoded')?
       @message 'неправильна адреса'
-      false
-    else
-      true
+      result = false
+    else if not $('.route').val()
+        @message 'введіть номер будинку'
+        result = false
+    result
+
   message: (message) ->
     console.log message
     alert(message)
