@@ -1,3 +1,4 @@
+# todo додати можливіть коментувати об’єкти
 $ ->
   class Fasady
     mainMap: null
@@ -72,35 +73,44 @@ $ ->
           'Фото існуючого стану'
 
     createMapMarkersOnMainMap: (map_objects)->
-      self = @
-      markers = []
+      map = @mainMap.map
       for map_object in map_objects
-        markers.push
-          lat: map_object.location[0]
-          lng: map_object.location[1]
+        marker = new google.maps.Marker
+          position: new google.maps.LatLng(map_object.location[0], map_object.location[1])
           title: map_object.name
+          map: map
           icon: "/assets/marker-#{map_object.color}.png"
-          infoWindow:
-            content: "<img width='235' src='#{map_object.before_photo}'><p>#{map_object.name}</p>"
-          click:
-            ((map_object)=>
-              (e)=>
-                @_fillMapObjectDescription(map_object)
-                @_openObjectDescription(map_object.location[0], map_object.location[1])
-            )(map_object)
-      #google.maps.event.addListener(marker, 'mouseover', function() {
-      #  infowindow.open(map, this);
-      #});
-      #
-      #// assuming you also want to hide the infowindow when user mouses-out
-      #google.maps.event.addListener(marker, 'mouseout', function() {
-      #  infowindow.close();
-      #});
-      @mainMap.addMarkers(markers)
+
+        @mainMap.markers.push marker
+
+        infobox = new InfoBox
+          content: "<img width='236' height='150' src='#{map_object.thumb}'><h3>#{map_object.name}</h3>"
+          disableAutoPan: true
+          maxWidth: 0
+          alignBottom: true
+          pixelOffset: new google.maps.Size(-118, -92)
+          closeBoxURL: ""
+          isHidden: false
+          pane: "floatPane"
+          enableEventPropagation: false
+
+        ((map, marker, map_object, infowindow, self)->
+          google.maps.event.addListener marker, 'mouseover', ->
+            infowindow.open(map, @)
+
+          google.maps.event.addListener marker, 'mouseout', ->
+            infowindow.close()
+
+          google.maps.event.addListener marker, 'click', ->
+            self._fillMapObjectDescription(map_object)
+            self._openObjectDescription(map_object.location[0], map_object.location[1])
+
+        )(map, marker, map_object, infobox, @)
+
 
     _fillMapObjectDescription: (map_object)=>
       $('#map_object_title').text(map_object.name)
-      $('#map_object_address').text "#{ map_object.address.prefix } #{ map_object.address.street }, #{ map_object.address.building_number }#{ map_object.address.modifier }"
+      $('#map_object_address').text "#{ map_object.address.prefix } #{ map_object.address.street }, #{ map_object.address.building_number }#{ map_object.address.modifier || '' }"
       $('#map_object_author_name').text map_object.user.name
       $('#map_object_author_avatar').prop('src', map_object.user.avatar)
       $('#map-object_image-before').prop('src', map_object.before_photo)
@@ -164,7 +174,8 @@ $ ->
       for letter, buildings of hash
         objects_by_letter = ''
         for b in buildings
-          objects_by_letter += "<li data-map-object='#{ JSON.stringify(b) }' class='object_name'>#{ b.address.street }, #{ b.address.building_number }</li>"
+#          todo можливо забрати модифікатор і зробити назву будику стрінгом, щоб зразу туди його і вписувати
+          objects_by_letter += "<li data-map-object='#{ JSON.stringify(b) }' class='object_name'>#{ b.address.street }, #{ b.address.building_number }#{ b.address.modifier || '' }</li>"
         all += "<li class='objects_block'><div class='letter'>#{letter}</div><ul class='letter_objects'>#{objects_by_letter}</ul></li>"
       $('#letters_list').html all
 
@@ -179,7 +190,6 @@ $ ->
       @fillLeftPanelBuildingsList(objectsFiltered)
       @createMapMarkersOnMainMap(objectsFiltered)
 
-#      todo додати по ховеру показувти попап на маркеті  і пофіксити його вигляд
     initSearchField: ->
 #       todo чосуь після реініціалізації не шукаю по нових даних бо датасет кешується https://github.com/twitter/typeahead.js/blob/master/src/typeahead.js
 #       тому я ініціалізую новий датасет з рандомною назвою, але це фігово, бо всі список датасетів постійно збільшується

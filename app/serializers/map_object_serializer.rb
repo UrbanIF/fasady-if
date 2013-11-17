@@ -1,6 +1,6 @@
 class MapObjectSerializer < ActiveModel::Serializer
   attributes :id, :name, :location, :description, :value, :tokens, :category, :color, :letter,
-  :before_photo, :after_photo
+  :before_photo, :after_photo, :thumb
   has_one  :address, :user
 
   has_many
@@ -21,6 +21,9 @@ class MapObjectSerializer < ActiveModel::Serializer
     object.address.street[0] if object.address
   end
 
+  def thumb
+    object.before_photo.thumb.url
+  end
   def before_photo
     object.before_photo.url
   end

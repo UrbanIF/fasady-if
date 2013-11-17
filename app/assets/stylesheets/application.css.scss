@@ -269,7 +269,7 @@ h1, h2, h3, h4, h5, h6{
                 &.yellow  { background: image-url('small-marker-yellow.png'); }
                 &.blue    { background: image-url('small-marker-blue.png');   }
                 &.purple  { background: image-url('small-marker-purple.png'); }
-                &.all     { background: image-url('small-marker-all.png'); }
+                &.all     { background: image-url('small-marker-all.png'); border-radius: 15px;}
             }
             &.disactive{
                 .marker{
@@ -358,6 +358,38 @@ h1, h2, h3, h4, h5, h6{
             text-align: center;
             line-height: 74px;
             cursor: pointer;
+
+            .tooltip{
+                opacity: 0;
+                @include transition(opacity 0.5s);
+                position: absolute;
+                top: -75px;
+                left: -62px;
+                font-size: 18px;
+                line-height: 57px;
+                height: 57px;
+                width: 198px;
+                text-align: center;
+                color: #fff;
+                background: #44494f;
+                @include border-radius(3px);
+                &:after {
+                    top: 100%;
+                    left: 50%;
+                    border: solid transparent;
+                    content: " ";
+                    height: 0;
+                    width: 0;
+                    position: absolute;
+                    pointer-events: none;
+                    border-top-color: #44494f;
+                    border-width: 17px;
+                    margin-left: -17px;
+                }
+            }
+            &:hover .tooltip{
+                opacity: 1;
+            }
         }
 
 
@@ -782,10 +814,37 @@ ol > li:hover:before {
 }
 
 
-
-// map infoWindow
-.gm-style .gm-style-iw div{
-    font-size: 18px;
-    font-weight: 300;
-    font-family: 'Open Sans', sans-serif;
+.infoBox{
+    width: 236px;
+    height: 207px;
+    background: #44494f;
+    @include border-radius(3px);
+    img{
+        @include border-radius(3px 3px 0 0);
+        overflow: hidden;
+    }
+    h3{
+        font-family: 'Open Sans', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-size: 18px;
+        font-weight: 300;
+        color: #fff;
+        line-height: 57px;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    &:after {
+        top: 100%;
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-top-color: #44494f;
+        border-width: 17px;
+        margin-left: -17px;
+    }
 }
