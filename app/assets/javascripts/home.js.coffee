@@ -110,9 +110,9 @@ $ ->
 
     _fillMapObjectDescription: (map_object)=>
       $('#map_object_title').text(map_object.name)
-      $('#map_object_address').text "#{ map_object.address.prefix } #{ map_object.address.street }, #{ map_object.address.building_number }#{ map_object.address.modifier || '' }"
+      $('#map_object_address').text "#{ map_object.address.prefix } #{ map_object.address.street }, #{ map_object.address.building_number }"
       $('#map_object_author_name').text map_object.user.name
-      $('#map_object_author_avatar').prop('src', map_object.user.avatar)
+      $('#map_object_author_avatar').prop('src', map_object.user.avatar) if map_object.user.avatar?
       $('#map-object_image-before').prop('src', map_object.before_photo)
       $('#map-object_image-after').prop('src', map_object.after_photo)
 
@@ -174,8 +174,7 @@ $ ->
       for letter, buildings of hash
         objects_by_letter = ''
         for b in buildings
-#          todo можливо забрати модифікатор і зробити назву будику стрінгом, щоб зразу туди його і вписувати
-          objects_by_letter += "<li data-map-object='#{ JSON.stringify(b) }' class='object_name'>#{ b.address.street }, #{ b.address.building_number }#{ b.address.modifier || '' }</li>"
+          objects_by_letter += "<li data-map-object='#{ JSON.stringify(b) }' class='object_name'>#{ b.address.street }, #{ b.address.building_number }</li>"
         all += "<li class='objects_block'><div class='letter'>#{letter}</div><ul class='letter_objects'>#{objects_by_letter}</ul></li>"
       $('#letters_list').html all
 
