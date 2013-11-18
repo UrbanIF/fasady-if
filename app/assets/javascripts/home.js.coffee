@@ -6,6 +6,8 @@ $ ->
     map_object_json: null
     categories_json: null
 
+    interv: null
+
     constructor: ->
       @mainMap = (new window.Map('#map', true)).map
 
@@ -45,6 +47,7 @@ $ ->
       $(document).on 'click', '.object_name', ->
         mapObject = $(@).data('mapObject')
         self._fillMapObjectDescription mapObject
+        clearInterval(self.interv)
         self.mainMap.setCenter(mapObject.location[0], mapObject.location[1])
         self.mainMap.setZoom(18)
 
@@ -119,14 +122,14 @@ $ ->
     _openObjectDescription: (lat, lng)=>
       $('.right_container').addClass('show-object')
       i = 0
-      interv = setInterval(
+      @interv = setInterval(
         =>
           @mainMap.refresh()
           @mainMap.setCenter(lat, lng)
           @mainMap.setZoom(18)
           i = i + 5
           if i > 600
-            clearInterval(interv)
+            clearInterval(@interv)
         5
       )
 
@@ -134,13 +137,13 @@ $ ->
       $('.right_container').removeClass('show-object')
       i = 0
       center = @mainMap.getCenter()
-      interv = setInterval(
+      @interv = setInterval(
         =>
           @mainMap.refresh()
           @mainMap.setCenter center.lat(), center.lng()
           i = i + 5
           if i > 600
-            clearInterval(interv)
+            clearInterval(@interv)
         5
       )
 
