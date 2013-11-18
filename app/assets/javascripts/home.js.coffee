@@ -28,10 +28,17 @@ $ ->
           @map_object_json = response
           @renderAllMapObjects()
 
+      $(document).on 'show_object', @showObject
+
     renderAllMapObjects: ()=>
       @createMapMarkersOnMainMap(@map_object_json)
       @fillLeftPanelBuildingsList(@map_object_json)
       @initSearchField()
+
+    showObject: (e, mapObject) =>
+      @_fillMapObjectDescription mapObject
+      @mainMap.setCenter mapObject.location[0], mapObject.location[1]
+      @mainMap.setZoom 18
 
     _clicksHandling: ->
       self = @
@@ -45,24 +52,19 @@ $ ->
 
       # GO TO MARKER IF CLICK ON LEFT PANEL
       $(document).on 'click', '.object_name', ->
-        mapObject = $(@).data('mapObject')
-        self._fillMapObjectDescription mapObject
-        clearInterval(self.interv)
-        self.mainMap.setCenter(mapObject.location[0], mapObject.location[1])
-        self.mainMap.setZoom(18)
+        $(document).trigger 'show_object', [$(@).data('mapObject')]
 
       $(document).on 'click', '.marker-desc', ->
-        $this = $(this)
-        if $this.hasClass('filter-reset')
-          $('.marker-desc').removeClass('disactive')
+        $this = $(@)
+        if $this.hasClass('filter-reset') or $this.hasClass('active')
+          $('.marker-desc').removeClass('active').removeClass('disactive')
+          categoryName = 'Усе'
         else
           $(".marker-desc:not('.filter-reset')").addClass('disactive')
-          $this.removeClass('disactive')
-        categoryName = $this.find('.desc').html()
+          $this.removeClass('disactive').addClass('active')
+          categoryName = $this.children('.desc').html()
+
         self._filterObjectsByCategory(categoryName)
-
-
-
 
 
       $(document).on 'click', '#map_object_close', =>
@@ -113,9 +115,9 @@ $ ->
 
     _fillMapObjectDescription: (map_object)=>
       $('#map_object_title').text(map_object.name)
-      $('#map_object_address').text "#{ map_object.address.prefix } #{ map_object.address.street }, #{ map_object.address.building_number }#{ map_object.address.modifier || '' }"
+      $('#map_object_address').text "#{ map_object.address.prefix } #{ map_object.address.street }, #{ map_object.address.building_number }"
       $('#map_object_author_name').text map_object.user.name
-      $('#map_object_author_avatar').prop('src', map_object.user.avatar)
+      $('#map_object_author_avatar').prop('src', map_object.user.avatar) if map_object.user.avatar?
       $('#map-object_image-before').prop('src', map_object.before_photo)
       $('#map-object_image-after').prop('src', map_object.after_photo)
 
@@ -143,11 +145,9 @@ $ ->
           @mainMap.setCenter center.lat(), center.lng()
           i = i + 5
           if i > 600
-            clearInterval(@interv)
+            clearInterval(interv)
         5
       )
-
-
 
     fillCategories: ->
       for category in @categories_json
@@ -177,8 +177,7 @@ $ ->
       for letter, buildings of hash
         objects_by_letter = ''
         for b in buildings
-#          todo можливо забрати модифікатор і зробити назву будику стрінгом, щоб зразу туди його і вписувати
-          objects_by_letter += "<li data-map-object='#{ JSON.stringify(b) }' class='object_name'>#{ b.address.street }, #{ b.address.building_number }#{ b.address.modifier || '' }</li>"
+          objects_by_letter += "<li data-map-object='#{ JSON.stringify(b) }' class='object_name'>#{ b.address.street }, #{ b.address.building_number }</li>"
         all += "<li class='objects_block'><div class='letter'>#{letter}</div><ul class='letter_objects'>#{objects_by_letter}</ul></li>"
       $('#letters_list').html all
 

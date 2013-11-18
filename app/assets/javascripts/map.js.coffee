@@ -11,6 +11,7 @@ class Map
       lat: 48.9228757160567
       lng: 24.71033066511154
       zoom: 13
+      streetViewControl: false
       zoomControlOptions:
         style: google.maps.ZoomControlStyle.SMALL
         position: google.maps.ControlPosition.RIGHT_TOP

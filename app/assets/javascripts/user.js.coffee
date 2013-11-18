@@ -56,7 +56,7 @@ class User
     $('#show-profile, #profile-popup_author_name').html(json.name)
     $('#show-profile').show()
 
-    $('#profile-popup_author_avatar').prop('src', json.avatar)
+    $('#profile-popup_author_avatar').prop('src', json.avatar) if json.avatar?
 
     if json.facebook
       $('.facebook_login_action').hide()

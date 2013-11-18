@@ -2,7 +2,7 @@ class Api::MapObjectsController < ApplicationController
   before_filter :authenticate_user!, only: :create
 
   def index
-    map_objects = MapObject.includes(:category).order_by(:'address.street'.asc).all
+    map_objects = MapObject.includes(:category).order_by(:'address.street'.asc).active
 
     #categories = Category.all
     render json: map_objects, status: 200  #, meta: {categories: categories.to_json}

@@ -33,11 +33,11 @@ class MapObjectSerializer < ActiveModel::Serializer
 
   #for twitter typehead
   def value
-    if object.address.modifier
-      "#{object.address.prefix} #{object.address.street}, #{object.address.building_number} #{object.address.modifier} (#{object.name})"
-    else
+    # if object.address.modifier
+    #   "#{object.address.prefix} #{object.address.street}, #{object.address.building_number} #{object.address.modifier} (#{object.name})"
+    # else
       "#{object.address.prefix} #{object.address.street}, #{object.address.building_number} (#{object.name})"
-    end
+    # end
   end
 
 

@@ -7,6 +7,10 @@ class MapObject
   field :description, type: String
   field :before_photo, type: String
   field :after_photo, type: String
+  field :reviewed, type: Mongoid::Boolean, default: false
+
+
+  scope :active, where(reviewed: true)
 
   belongs_to :category
   belongs_to :user
