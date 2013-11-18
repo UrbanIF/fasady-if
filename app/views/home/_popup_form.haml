@@ -19,11 +19,11 @@
           .btn.add-image.margin-right.left>
             %i
               Фото існуючого стану
-            %input.add-image_input.left{name: 'map_object[before_photo]', type: 'file'}
+            %input.add-image_input.left{name: 'map_object[before_photo]', type: 'file', accept: 'image/*'}
           .btn.add-image.right
             %i
               Проект-пропозиція до об’єкта
-            %input.add-image_input.right{name: 'map_object[after_photo]', type: 'file'}
+            %input.add-image_input.right{name: 'map_object[after_photo]', type: 'file', accept: 'image/*'}
         %input.lat{type:'hidden', name:'map_object[location][]'}
         %input.lng{type:'hidden', name:'map_object[location][]'}
         %input.street{type:'hidden', name:'map_object[address][street]'}
