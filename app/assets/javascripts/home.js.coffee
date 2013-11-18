@@ -26,10 +26,17 @@ $ ->
           @map_object_json = response
           @renderAllMapObjects()
 
+      $(document).on 'show_object', @showObject
+
     renderAllMapObjects: ()=>
       @createMapMarkersOnMainMap(@map_object_json)
       @fillLeftPanelBuildingsList(@map_object_json)
       @initSearchField()
+
+    showObject: (e, mapObject) =>
+      @_fillMapObjectDescription mapObject
+      @mainMap.setCenter mapObject.location[0], mapObject.location[1]
+      @mainMap.setZoom 18
 
     _clicksHandling: ->
       self = @
@@ -43,23 +50,19 @@ $ ->
 
       # GO TO MARKER IF CLICK ON LEFT PANEL
       $(document).on 'click', '.object_name', ->
-        mapObject = $(@).data('mapObject')
-        self._fillMapObjectDescription mapObject
-        self.mainMap.setCenter(mapObject.location[0], mapObject.location[1])
-        self.mainMap.setZoom(18)
+        $(document).trigger 'show_object', [$(@).data('mapObject')]
 
       $(document).on 'click', '.marker-desc', ->
-        $this = $(this)
-        if $this.hasClass('filter-reset')
-          $('.marker-desc').removeClass('disactive')
+        $this = $(@)
+        if $this.hasClass('filter-reset') or $this.hasClass('active')
+          $('.marker-desc').removeClass('active').removeClass('disactive')
+          categoryName = 'Усе'
         else
           $(".marker-desc:not('.filter-reset')").addClass('disactive')
-          $this.removeClass('disactive')
-        categoryName = $this.find('.desc').html()
+          $this.removeClass('disactive').addClass('active')
+          categoryName = $this.children('.desc').html()
+
         self._filterObjectsByCategory(categoryName)
-
-
-
 
 
       $(document).on 'click', '#map_object_close', =>
@@ -143,8 +146,6 @@ $ ->
             clearInterval(interv)
         5
       )
-
-
 
     fillCategories: ->
       for category in @categories_json

@@ -50,8 +50,8 @@ class ObjectForm
         processData: false
 
       xhr.done (json)=>
-        window.fasady.map_object_json.push json          # add to GLOBAL objects list
-        window.fasady.renderAllMapObjects()
+        # window.fasady.map_object_json.push json          # add to GLOBAL objects list
+        # window.fasady.renderAllMapObjects()
 
         @popup.removeClass('active')
         @resetForm()
