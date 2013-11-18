@@ -37,6 +37,7 @@ $ ->
 
     showObject: (e, mapObject) =>
       @_fillMapObjectDescription mapObject
+      clearInterval(@interv)
       @mainMap.setCenter mapObject.location[0], mapObject.location[1]
       @mainMap.setZoom 18
 
@@ -145,7 +146,7 @@ $ ->
           @mainMap.setCenter center.lat(), center.lng()
           i = i + 5
           if i > 600
-            clearInterval(interv)
+            clearInterval(@interv)
         5
       )
 
