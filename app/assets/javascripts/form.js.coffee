@@ -52,7 +52,7 @@ class ObjectForm
       xhr.done (json)=>
         # window.fasady.map_object_json.push json          # add to GLOBAL objects list
         # window.fasady.renderAllMapObjects()
-
+        $('#user_added_objects').append "<li>#{json.name}, #{json.prefix} #{json.street}, #{json.building_number}</li>"
         @popup.removeClass('active')
         @resetForm()
         $('#addition_success-popup').addClass('active')

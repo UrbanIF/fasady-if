@@ -54,6 +54,11 @@ class User
     @loged_in = true
     $('#login').hide()
     $('#show-profile, #profile-popup_author_name').html(json.name)
+
+    all = ''
+    for object in json.map_objects
+      all += "<li>#{object.name}, #{object.prefix} #{object.street}, #{object.building_number}</li>"
+    $('#user_added_objects').html all
     $('#show-profile').show()
 
     $('#profile-popup_author_avatar').prop('src', json.avatar) if json.avatar?
