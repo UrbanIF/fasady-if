@@ -1,4 +1,3 @@
-# todo додати вивід списку об’єктів, які створив юзер
 class User
   user: null
   loged_in: false

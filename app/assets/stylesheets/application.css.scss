@@ -403,7 +403,6 @@ h1, h2, h3, h4, h5, h6{
                 }
             }
             &:active{
-                // todo add effect
                 @include box-shadow(inset 0px 12px 1px -7px #6092e5);
                 background-color: #6ba3ff;
                 @include text-shadow(0px 5px 2px #6092e5);
@@ -599,8 +598,6 @@ h1, h2, h3, h4, h5, h6{
                 background-color: #6ba3ff;
             }
             &:active{
-                // todo add effect
-                //background-color: #656d77;
                 @include box-shadow(inset 0px 12px 1px -7px #6092e5);
                 @include text-shadow(0px 5px 2px #6194e7);
             }
@@ -746,7 +743,6 @@ h1, h2, h3, h4, h5, h6{
                 background-color: #6ba3ff;
             }
             &:active{
-                // todo add effect
                 background-color: #656d77;
             }
         }
