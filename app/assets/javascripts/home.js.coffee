@@ -62,6 +62,7 @@ $ ->
           categoryName = 'Усе'
         else
           $(".marker-desc:not('.filter-reset')").addClass('disactive')
+          $('.marker-desc').removeClass('active')
           $this.removeClass('disactive').addClass('active')
           categoryName = $this.children('.desc').html()
 
