@@ -26,7 +26,7 @@ class OauthController < ApplicationController
       user.save(validate: false)
       sign_in user
 
-      render json: user
+      render json: user, serializer: CurrentUserSerializer
     else
       render json: {msg: 'bad token or secret'}, status: 401
     end
@@ -54,7 +54,7 @@ class OauthController < ApplicationController
       user.save(validate: false)
       sign_in user
 
-      render json: user
+      render json: user, serializer: CurrentUserSerializer
     rescue FbGraph::InvalidToken => e
       render json: {msg: 'bad token'}, status: 401
     end
