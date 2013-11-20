@@ -24,6 +24,7 @@ class MapObject
 
   accepts_nested_attributes_for :address
 
+  validates_presence_of :name, :description, :before_photo, :after_photo, :location
 end
 
 

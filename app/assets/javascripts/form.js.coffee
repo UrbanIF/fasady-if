@@ -56,7 +56,11 @@ class ObjectForm
         @popup.removeClass('active')
         @resetForm()
         $('#addition_success-popup').addClass('active')
-      xhr.fail =>
+      xhr.fail (xhr, error)=>
+        console.log error
+        switch xhr.status
+          when 422 then message 'Перевірте правельність заповнення форми та спробуйте ще раз'
+
       xhr.always =>
     else
       message 'Заповніть всі поля'

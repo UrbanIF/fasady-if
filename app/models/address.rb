@@ -9,5 +9,6 @@ class Address
   embedded_in :map_object
 
   #todo ADD index
+  validates_presence_of :street, :building_number
 
 end
