@@ -57,7 +57,7 @@ class User
     if json.map_objects
       all = ''
       for object in json.map_objects
-        all += "<li>#{object.name}, #{object.prefix} #{object.street}, #{object.building_number}</li>"
+        all += "<li>#{object.name}, #{object.address.prefix} #{object.address.street}, #{object.address.building_number}</li>"
       $('#user_added_objects').html all
 
     $('#show-profile').show()
