@@ -14,6 +14,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require_directory ./vendor
+//= require markers
 //= require map
 //= require home
 //= require form

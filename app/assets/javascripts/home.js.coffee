@@ -85,7 +85,7 @@ $ ->
           position: new google.maps.LatLng(map_object.location[0], map_object.location[1])
           title: map_object.name
           map: map
-          icon: "/assets/marker-#{map_object.color}.png"
+          icon: window.markers[map_object.color]
 
         @mainMap.markers.push marker
 

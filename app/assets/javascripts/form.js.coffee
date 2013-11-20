@@ -81,7 +81,7 @@ class ObjectForm
     @marker = @popupMap.addMarker
       lat: 48.9228757160567
       lng: 24.71033066511154
-      icon: '/assets/marker-add.png'
+      icon: window.markers.add
       draggable: true
     GMaps.on "dragend", @marker, @processMarker
 
