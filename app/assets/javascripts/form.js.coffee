@@ -16,7 +16,7 @@ class ObjectForm
       prefix = ''
       if data['route']?
         prefix = (/вулиця/i.exec(data['route']))
-        prefix = prefix[0] if prefix[0]?
+        prefix = prefix[0] if prefix? and prefix[0]?
         adress = data['route'].replace /вулиця /i, ''
       $('.street').val adress
       $('.route').val data['street_number']

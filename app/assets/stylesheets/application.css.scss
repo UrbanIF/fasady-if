@@ -669,6 +669,7 @@ h1, h2, h3, h4, h5, h6{
             display: inline-block;
             background-image: inline-image("add-file2.png");
             position: relative;
+            overflow:hidden;
         }
             .add-image_input{
                 cursor: pointer;
