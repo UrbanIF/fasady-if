@@ -1,17 +1,20 @@
 # todo пошук не працює якщо назву введено з орфографічними помилками
 class ObjectForm
   constructor: ->
-    alert('old browser') if window.formData?
     @form = $('#object_form')
     @form.on 'submit', @submit
     @popup = $('#add_object_popup')
     @lat = $('.lat')
     @lng = $('.lng')
     @searchInput = $('#popup_search')
+    @bindEvents()
+
+  bindEvents: ->
     $('.search_button').on 'click', @geocode
     $('.add-image_input').on 'change', @fileSelected
     $('#add_object'). on 'click', @showForm
     $(window).on 'geocoded', (e, data)->
+      $('.popup_search_container').removeClass('invalid').addClass('valid')
       adress = ''
       prefix = ''
       if data['route']?
@@ -22,13 +25,11 @@ class ObjectForm
       $('.route').val data['street_number']
       $('.prefix').val prefix
       $('#popup_search').data('geocoded', 'geocoded')
-      # @validateForm()
-      $('.popup_search_container .search_button').addClass('geocoded')
 
     $(window).on 'geocoding_error', =>
-      @message 'адресу не знайдено'
+      $('.popup_search_container').addClass('invalid').removeClass('valid')
+      message 'адресу не знайдено'
       $('#popup_search').removeData('geocoded')
-      $('.popup_search_container .search_button').removeClass('geocoded')
       $('.street').val ''
       $('.route').val ''
       $('.prefix').val ''
@@ -57,13 +58,16 @@ class ObjectForm
         $('#addition_success-popup').addClass('active')
       xhr.fail =>
       xhr.always =>
+    else
+      message 'Заповніть всі поля'
 
   resetForm: ->
     @form.find("input[type=text], input[type=file], textarea").val('')
     $('.add-image.left i').text('Фото існуючого стану')
     $('.add-image.right i').text('Проект-пропозиція до об’єкта')
     $('#category_select option:eq(0)').prop('selected','selected')
-
+    $('.popup_search_container').removeClass('valid')
+    $('#popup_search').removeData('geocoded')
     $('#category_select').dropkick 'reset'
 
   showForm: =>
@@ -133,16 +137,12 @@ class ObjectForm
   checkAdress: ->
     result = true
     if not $('#popup_search').data('geocoded')?
-      @message 'неправильна адреса'
+      message 'неправильна адреса'
       result = false
     else if not $('.route').val()
-        @message 'введіть номер будинку'
+        message 'введіть номер будинку'
         result = false
     result
-
-  message: (message) ->
-    console.log message
-    alert(message)
 
   checkValue:(item, class_item) ->
     class_item = item if not class_item?
