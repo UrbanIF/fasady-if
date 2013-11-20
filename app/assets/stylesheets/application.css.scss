@@ -22,6 +22,7 @@ $dark: #585d64;
 
 html, body{
     height: 100%;
+    min-width: 1024px;
 }
 
 body{
@@ -413,6 +414,7 @@ h1, h2, h3, h4, h5, h6{
 
         .map-object{
             width: 100%;
+            min-width: 630px;
             height: 100%;
             margin-top: -154px;
             padding: 170px 26px 30px 36px;
