@@ -57,12 +57,11 @@ $ ->
 
       $(document).on 'click', '.marker-desc', ->
         $this = $(@)
-        if $this.hasClass('filter-reset') or $this.hasClass('active')
+        if $this.hasClass('active')
           $('.marker-desc').removeClass('active').removeClass('disactive')
-          categoryName = 'Усе'
+          categoryName = ''
         else
-          $(".marker-desc:not('.filter-reset')").addClass('disactive')
-          $('.marker-desc').removeClass('active')
+          $(".marker-desc").addClass('disactive').removeClass('active')
           $this.removeClass('disactive').addClass('active')
           categoryName = $this.children('.desc').html()
 
@@ -155,7 +154,6 @@ $ ->
       for category in @categories_json
         $('#categories').append "<div class='marker-desc'><div class='marker #{category.color}'></div><div class='desc'>#{category.name}</div></div>"
         $('#category_select').append "<option value='#{category.id}'>#{category.name}</option>"
-      $('#categories').append "<div class='marker-desc filter-reset'><div class='marker all'></div><div class='desc'>Усе</div></div>"
 
     fillLeftPanelBuildingsList: (map_object_json)->
       arrToHash = (orig) ->
@@ -187,7 +185,7 @@ $ ->
       @mainMap.removeMarkers()
 #      @mainMap.markerClusterer.clearMarkers()
 
-      if categoryName == 'Усе'
+      if categoryName == ''
         objectsFiltered = @map_object_json
       else
         objectsFiltered = (object for object in @map_object_json when object.category == categoryName)
