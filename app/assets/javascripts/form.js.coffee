@@ -41,6 +41,7 @@ class ObjectForm
     form_valid = @validateForm()
     console.log form_valid
     if form_valid
+      $('#submit_object').prop('disabled', true)
       xhr = $.ajax
         type: "POST"
         url: @form.prop('action')
@@ -62,6 +63,8 @@ class ObjectForm
           when 422 then message 'Перевірте правельність заповнення форми та спробуйте ще раз'
 
       xhr.always =>
+        $('#submit_object').removeProp('disabled')
+
     else
       message 'Заповніть всі поля, та підтвердіть адресу'
 
