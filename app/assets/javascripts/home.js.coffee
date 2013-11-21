@@ -218,14 +218,15 @@ $ ->
     $.toast(message, {sticky: false, type: 'danger'})
 
   if typeof window.FormData is 'undefined'
-    message('ваш браузер застарілий')
+    message('Ви користуєтесь застарілою версією браузера')
     $('#add_object').hide()
   else
     fd = new FormData
     if typeof fd.append is 'undefined'
-      message('ваш браузер застарілий')
+      message('Ви користуєтесь застарілою версією браузера')
       $('#add_object').hide()
 
   window.message = message
 
 window.log = console.log
+String::strip = -> if String::trim? then @trim() else @replace /^\s+|\s+$/g, ""

@@ -27,8 +27,8 @@ class ObjectForm
       $('#popup_search').data('geocoded', 'geocoded')
 
     $(window).on 'geocoding_error', =>
+      message 'Адресу не знайдено'
       $('.popup_search_container').addClass('invalid').removeClass('valid')
-      message 'адресу не знайдено'
       $('#popup_search').removeData('geocoded')
       $('.street').val ''
       $('.route').val ''
@@ -63,7 +63,7 @@ class ObjectForm
 
       xhr.always =>
     else
-      message 'Заповніть всі поля'
+      message 'Заповніть всі поля, та підтвердіть адресу'
 
   resetForm: ->
     @form.find("input[type=text], input[type=file], textarea").val('')
@@ -112,6 +112,10 @@ class ObjectForm
 
   geocode: (e)=>
     e.preventDefault()
+    if @searchInput.val().trim() is  ''
+      $(window).trigger('geocoding_error')
+      return false
+
     GMaps.geocode
       address: "#{@searchInput.val()}, Івано-Франнківськ"
       callback: (results, status) =>
@@ -139,14 +143,14 @@ class ObjectForm
     a1 and a2 and a3 and a4 and a5 and a6 and @checkAdress()
 
   checkAdress: ->
-    result = true
     if not $('#popup_search').data('geocoded')?
-      message 'неправильна адреса'
-      result = false
+      message 'Адресу не знайдено'
+      return false
     else if not $('.route').val()
-        message 'введіть номер будинку'
-        result = false
-    result
+        message 'Введіть номер будинку'
+        return false
+
+    true
 
   checkValue:(item, class_item) ->
     class_item = item if not class_item?
